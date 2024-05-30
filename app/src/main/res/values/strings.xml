@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Expense Tracker</string>
+
+    <string name="logo_content_description">App logo</string>
+
+    <string name="welcome">Dobrodošli!</string>
+    <string name="sign_in">Prijavite se</string>
+    <string name="next">Dalje</string>
+    <string name="not_registered_yet">Niste registrirani?</string>
+    <string name="login_screen_email_field_label">E-mail</string>
+    <string name="login_screen_password_field_label">Lozinka</string>
+    <string name="text_visibility_icon_content_description">Toggle visibility</string>
+    <string name="register_user">Registrirajte se</string>
+    <string name="already_have_acc">Već imate račun?</string>
+    <string name="login_screen_username_field_label">Korisničko ime</string>
+    <string name="login_screen_repeat_password_field_label">Ponovi lozinku</string>
+    <string name="login_screen_firstname_field_label">Ime</string>
+    <string name="login_screen_lastname_field_label">Prezime</string>
 </resources>
