@@ -1,26 +1,22 @@
-package com.rma.expensetracker
+package com.rma.expensetracker.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rma.expensetracker.ui.theme.ExpenseTrackerTheme
+import com.rma.expensetracker.data.repositories.CurrentUserRepository
+import com.rma.expensetracker.presentation.ui.theme.ExpenseTrackerTheme
 
 class MainActivity : ComponentActivity() {
+    companion object { val currentUserRepository = CurrentUserRepository() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ExpenseTrackerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
-                }
+                MainComposable()
             }
         }
     }
@@ -41,3 +37,10 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+/*
+// A surface container using the 'background' color from the theme
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    DestinationsNavHost(navGraph = NavGraphs.root)
+                }
+ */

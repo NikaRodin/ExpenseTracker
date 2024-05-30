@@ -1,4 +1,4 @@
-package com.rma.expensetracker.ui.theme
+package com.rma.expensetracker.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
