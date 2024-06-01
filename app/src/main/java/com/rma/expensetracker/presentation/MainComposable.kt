@@ -113,8 +113,8 @@ fun MainComposable(
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues = paddingValues)) {
             NavHost(navController = navController, startDestination = startDestination) {
-                preLoginNavGraph(navController)
-                postLoginNavGraph(navController)
+                preLoginNavGraph()
+                postLoginNavGraph()
             }
         }
     }

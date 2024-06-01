@@ -33,14 +33,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.rma.expensetracker.R
 
 @Composable
-fun WelcomeScreen(
-    navController: NavHostController,
-    viewModel: WelcomeScreenViewModel = WelcomeScreenViewModel(navController)
-) {
+fun WelcomeScreen(viewModel: WelcomeScreenViewModel = WelcomeScreenViewModel()) {
+
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
     var isLoginFormDisplayed by rememberSaveable { mutableStateOf(true) }
