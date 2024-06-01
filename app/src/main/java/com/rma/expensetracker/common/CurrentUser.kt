@@ -1,10 +1,10 @@
-package com.rma.expensetracker.data.repositories
+package com.rma.expensetracker.common
 
-import com.rma.expensetracker.data.remote.models.User
+import com.rma.expensetracker.data.models.useful.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class CurrentUserRepository {
+object CurrentUser {
     private val _currentUser = MutableStateFlow<User?>(null)
     val currentUser: StateFlow<User?> = _currentUser
 

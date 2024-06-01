@@ -1,9 +1,7 @@
-package com.rma.expensetracker.data.repositories
+package com.rma.expensetracker.data.interactors
 
-import com.rma.expensetracker.data.remote.ExpenseTrackerApi
-import com.rma.expensetracker.data.remote.RetrofitClient
-import com.rma.expensetracker.data.remote.dto.RegistrationCredentials
-import com.rma.expensetracker.data.remote.dto.RegistrationRequest
+import com.rma.expensetracker.data.models.raw.RegistrationCredentials
+import com.rma.expensetracker.data.models.raw.RegistrationRequest
 
 suspend fun dispatchRegistrationRequest(
     email: String,

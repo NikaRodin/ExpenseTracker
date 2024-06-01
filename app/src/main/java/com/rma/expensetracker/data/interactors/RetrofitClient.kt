@@ -1,4 +1,4 @@
-package com.rma.expensetracker.data.remote
+package com.rma.expensetracker.data.interactors
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

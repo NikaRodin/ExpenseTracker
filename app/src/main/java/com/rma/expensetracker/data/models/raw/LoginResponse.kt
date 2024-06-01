@@ -1,11 +1,11 @@
-package com.rma.expensetracker.data.remote.dto
+package com.rma.expensetracker.data.models.raw
 
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse (
     val result: String,
     val message: String,
-    val user: List<UserDto>    //val user: List<User>
+    val user: List<UserDto>
 )
 
 data class UserDto(
@@ -17,7 +17,5 @@ data class UserDto(
     val lastName: String,
     val email: String,
     @SerializedName("user_name")
-    val userName: String?  //zašto je null - pitati
+    val userName: String?
 )
-
-//TODO mapping

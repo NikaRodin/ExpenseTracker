@@ -11,11 +11,39 @@ object PostLoginDestinations {
             get() = "post-login"
     }
 
-    val GreetingScreen = object : NavigationCommand {
+    val RecordsScreen = object : NavigationCommand {
         override val arguments: List<NamedNavArgument>
             get() = emptyList()
         override val destination: String
-            get() = "greeting-screen"
+            get() = "records-screen"
+    }
+
+    val SavingsScreen = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument>
+            get() = emptyList()
+        override val destination: String
+            get() = "savings-screen"
+    }
+
+    val AddNewRecordScreen = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument>
+            get() = emptyList()
+        override val destination: String
+            get() = "add-new-record-screen"
+    }
+
+    val GroupsScreen = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument>
+            get() = emptyList()
+        override val destination: String
+            get() = "groups-screen"
+    }
+
+    val BudgetScreen = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument>
+            get() = emptyList()
+        override val destination: String
+            get() = "budget-screen"
     }
 
     // Example of a route with arguments

@@ -1,12 +1,9 @@
-package com.rma.expensetracker.data.repositories
+package com.rma.expensetracker.data.interactors
 
-import com.rma.expensetracker.data.remote.ExpenseTrackerApi
-import com.rma.expensetracker.data.remote.RetrofitClient
-import com.rma.expensetracker.data.remote.dto.LoginCredentials
-import com.rma.expensetracker.data.remote.dto.LoginRequest
-import com.rma.expensetracker.data.remote.dto.UserDto
-import com.rma.expensetracker.data.remote.models.User
-import com.rma.expensetracker.presentation.MainActivity.Companion.currentUserRepository
+import com.rma.expensetracker.common.CurrentUser
+import com.rma.expensetracker.data.mapUserDtoToUser
+import com.rma.expensetracker.data.models.raw.LoginCredentials
+import com.rma.expensetracker.data.models.raw.LoginRequest
 
 suspend fun dispatchLoginRequest(email: String, password: String) {
     val apiService: ExpenseTrackerApi = RetrofitClient.instance.create(ExpenseTrackerApi::class.java)
@@ -19,7 +16,7 @@ suspend fun dispatchLoginRequest(email: String, password: String) {
         if (response.isSuccessful) {
             val responseBody = response.body()
             if (responseBody != null && responseBody.result == "success") {
-                currentUserRepository.updateCurrentUser(mapUserDtoToUser(responseBody.user[0]))
+                CurrentUser.updateCurrentUser(mapUserDtoToUser(responseBody.user[0]))
             } else {
                 println("Error: ${responseBody?.message ?: "Unknown error"}")
             }
@@ -29,8 +26,4 @@ suspend fun dispatchLoginRequest(email: String, password: String) {
     } catch (e: Exception) {
         println("Failure: ${e.message}")
     }
-}
-
-fun mapUserDtoToUser(userDto: UserDto) : User {
-    return User(userDto.firstName, userDto.lastName, userDto.email, userDto.userName)
 }

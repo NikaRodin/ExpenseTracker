@@ -1,4 +1,4 @@
-package com.rma.expensetracker.data.remote.dto
+package com.rma.expensetracker.data.models.raw
 
 import com.google.gson.annotations.SerializedName
 
@@ -17,4 +17,3 @@ data class RegistrationCredentials(
     val email: String,
     val password: String,
 )
-//redoslijed?

@@ -2,18 +2,16 @@ package com.rma.expensetracker.presentation.prelogin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
-import com.rma.expensetracker.data.repositories.dispatchLoginRequest
-import com.rma.expensetracker.data.repositories.dispatchRegistrationRequest
+import com.rma.expensetracker.common.CurrentUser
+import com.rma.expensetracker.data.interactors.dispatchRegistrationRequest
+import com.rma.expensetracker.data.models.useful.User
 import com.rma.expensetracker.presentation.prelogin.components.InputFieldState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class WelcomeScreenViewModel(
-    private val navController: NavHostController
-) : ViewModel(){
+class WelcomeScreenViewModel : ViewModel(){
 
     private val _firstNameState = MutableStateFlow(
         InputFieldState(
@@ -68,15 +66,19 @@ class WelcomeScreenViewModel(
 
     fun login() {
         //showLoading()
-        viewModelScope.launch {
+
+        //ZA TESTING
+        /*viewModelScope.launch {
             dispatchLoginRequest(emailState.value.text, passwordState.value.text)
-        }
-
-        /*navController.navigate(PostLoginDestinations.Root.destination) {
-            popUpTo(0)
-            launchSingleTop = true
         }*/
-
+        CurrentUser.updateCurrentUser(
+            User(
+                firstName = "Rino",
+                lastName = "Rodin",
+                email = "rino.rodin@hotmail.com",
+                userName = "rrodin"
+            )
+        )
     }
     fun registerUser() {
         if(passwordState.value.text == repeatPasswordState.value.text)

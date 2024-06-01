@@ -1,4 +1,4 @@
-package com.rma.expensetracker.data.remote.models
+package com.rma.expensetracker.data.models.useful
 
 data class User(
     val firstName: String,

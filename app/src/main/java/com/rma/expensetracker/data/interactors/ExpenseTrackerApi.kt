@@ -1,9 +1,9 @@
-package com.rma.expensetracker.data.remote
+package com.rma.expensetracker.data.interactors
 
-import com.rma.expensetracker.data.remote.dto.LoginRequest
-import com.rma.expensetracker.data.remote.dto.LoginResponse
-import com.rma.expensetracker.data.remote.dto.RegistrationRequest
-import com.rma.expensetracker.data.remote.dto.RegistrationResponse
+import com.rma.expensetracker.data.models.raw.LoginRequest
+import com.rma.expensetracker.data.models.raw.LoginResponse
+import com.rma.expensetracker.data.models.raw.RegistrationRequest
+import com.rma.expensetracker.data.models.raw.RegistrationResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST

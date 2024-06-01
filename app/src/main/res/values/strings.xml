@@ -16,4 +16,15 @@
     <string name="login_screen_repeat_password_field_label">Ponovi lozinku</string>
     <string name="login_screen_firstname_field_label">Ime</string>
     <string name="login_screen_lastname_field_label">Prezime</string>
+
+    <string name="records_tab_label">Records</string>
+    <string name="records_tab_description">Records tab</string>
+    <string name="savings_tab_label">Savings</string>
+    <string name="savings_tab_description">Savings tab</string>
+    <string name="add_tab_label">Add</string>
+    <string name="add_tab_description">Add tab</string>
+    <string name="groups_tab_label">Groups</string>
+    <string name="groups_tab_description">Groups tab</string>
+    <string name="budget_tab_label">Budget</string>
+    <string name="budget_tab_description">Budget tab</string>
 </resources>

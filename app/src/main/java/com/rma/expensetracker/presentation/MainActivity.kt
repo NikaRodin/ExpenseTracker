@@ -7,11 +7,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.rma.expensetracker.data.repositories.CurrentUserRepository
 import com.rma.expensetracker.presentation.ui.theme.ExpenseTrackerTheme
 
 class MainActivity : ComponentActivity() {
-    companion object { val currentUserRepository = CurrentUserRepository() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

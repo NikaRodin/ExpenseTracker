@@ -1,4 +1,4 @@
-package com.rma.expensetracker.data.remote.dto
+package com.rma.expensetracker.data.models.raw
 
 data class LoginRequest(
     val operation: String,
