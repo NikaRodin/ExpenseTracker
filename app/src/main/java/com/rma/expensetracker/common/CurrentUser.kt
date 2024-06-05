@@ -1,6 +1,6 @@
 package com.rma.expensetracker.common
 
-import com.rma.expensetracker.data.models.useful.User
+import com.rma.expensetracker.data.models.mock.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

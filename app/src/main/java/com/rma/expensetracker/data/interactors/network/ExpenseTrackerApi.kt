@@ -1,4 +1,4 @@
-package com.rma.expensetracker.data.interactors
+package com.rma.expensetracker.data.interactors.network
 
 import com.rma.expensetracker.data.models.raw.LoginRequest
 import com.rma.expensetracker.data.models.raw.LoginResponse

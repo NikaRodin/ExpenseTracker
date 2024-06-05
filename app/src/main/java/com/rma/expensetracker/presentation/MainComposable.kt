@@ -35,10 +35,11 @@ import com.rma.expensetracker.presentation.navigation.directions.PostLoginDestin
 import com.rma.expensetracker.presentation.navigation.directions.PreLoginDestinations
 import com.rma.expensetracker.presentation.navigation.postLoginNavGraph
 import com.rma.expensetracker.presentation.navigation.preLoginNavGraph
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun MainComposable(
-    viewModel: MainViewModel = MainViewModel()
+    viewModel: MainViewModel = viewModel()
 ) {
     val navController: NavHostController = rememberNavController()
     val userLoggedIn by viewModel.userLoggedIn.collectAsState()
@@ -72,23 +73,25 @@ fun MainComposable(
                                         top = 4.dp,
                                         end = 4.dp,
                                         bottom = if (item.direction == BottomNavItem.BottomNavDirection.ADD) 4.dp
-                                                 else 0.dp
+                                        else 0.dp
                                     )
                                     .background(
                                         color =
                                         if (item == selectedBottomNavItem &&
-                                            item.direction != BottomNavItem.BottomNavDirection.ADD)
+                                            item.direction != BottomNavItem.BottomNavDirection.ADD
+                                        )
                                             MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                                         else
                                             Color.Transparent,
-                                        shape = CircleShape)
+                                        shape = CircleShape
+                                    )
                                     .padding(2.dp)
                                 ) {
                                     Icon(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .size(
-                                                if(item.direction == BottomNavItem.BottomNavDirection.ADD) 50.dp
+                                                if (item.direction == BottomNavItem.BottomNavDirection.ADD) 50.dp
                                                 else 30.dp
                                             ),
                                         painter = painterResource(id = item.icon),
@@ -114,7 +117,7 @@ fun MainComposable(
         Column(modifier = Modifier.padding(paddingValues = paddingValues)) {
             NavHost(navController = navController, startDestination = startDestination) {
                 preLoginNavGraph()
-                postLoginNavGraph()
+                postLoginNavGraph(navController)
             }
         }
     }
@@ -134,3 +137,4 @@ fun navigateToItemDestination(item: BottomNavItem, navController: NavHostControl
         launchSingleTop = true
     }
 }
+//TODO ipak prebaci u viewModel kasnije i izdvoji BottomNavigation kao komponentu

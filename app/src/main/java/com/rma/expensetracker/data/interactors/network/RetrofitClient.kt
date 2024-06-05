@@ -1,4 +1,4 @@
-package com.rma.expensetracker.data.interactors
+package com.rma.expensetracker.data.interactors.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

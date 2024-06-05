@@ -27,4 +27,25 @@
     <string name="groups_tab_description">Groups tab</string>
     <string name="budget_tab_label">Budget</string>
     <string name="budget_tab_description">Budget tab</string>
+    <string name="gallery_icon_description">Gallery icon</string>
+    <string name="settings_icon_description">Settings icon\n</string>
+    <string name="search_records_icon_description">Search icon</string>
+    <string name="filter_list_icon_description">Sort icon</string>
+    <string name="filter_icon_description">Filter icon</string>
+    <string name="current_balance">"Trenutno stanje"</string>
+
+    <string name="january_label">SIJ</string>
+    <string name="february_label">VELJ</string>
+    <string name="march_label">OŽU</string>
+    <string name="april_label">TRA</string>
+    <string name="may_label">SVI</string>
+    <string name="june_label">LIP</string>
+    <string name="july_label">SRP</string>
+    <string name="august_label">KOL</string>
+    <string name="september_label">RUJ</string>
+    <string name="october_label">LIS</string>
+    <string name="november_label">STU</string>
+    <string name="december_label">PRO</string>
+    <string name="group_record_category_title">Grupna stavka</string>
+    <string name="my_accounts">Moji računi</string>
 </resources>

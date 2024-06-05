@@ -3,8 +3,8 @@ package com.rma.expensetracker.presentation.prelogin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rma.expensetracker.common.CurrentUser
-import com.rma.expensetracker.data.interactors.dispatchRegistrationRequest
-import com.rma.expensetracker.data.models.useful.User
+import com.rma.expensetracker.data.interactors.AuthenticationInteractor
+import com.rma.expensetracker.data.interactors.UserInteractor
 import com.rma.expensetracker.presentation.prelogin.components.InputFieldState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -69,21 +69,17 @@ class WelcomeScreenViewModel : ViewModel(){
 
         //ZA TESTING
         /*viewModelScope.launch {
-            dispatchLoginRequest(emailState.value.text, passwordState.value.text)
-        }*/
-        CurrentUser.updateCurrentUser(
-            User(
-                firstName = "Rino",
-                lastName = "Rodin",
-                email = "rino.rodin@hotmail.com",
-                userName = "rrodin"
+            AuthenticationInteractor.dispatchLoginRequest(
+                emailState.value.text,
+                passwordState.value.text
             )
-        )
+        }*/
+        CurrentUser.updateCurrentUser(UserInteractor.getUserById("anneId"))
     }
     fun registerUser() {
         if(passwordState.value.text == repeatPasswordState.value.text)
             viewModelScope.launch {
-                dispatchRegistrationRequest(
+                AuthenticationInteractor.dispatchRegistrationRequest(
                     email = emailState.value.text,
                     password = passwordState.value.text,
                     firstName = firstNameState.value.text,

@@ -3,7 +3,7 @@ package com.rma.expensetracker.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rma.expensetracker.common.CurrentUser
-import com.rma.expensetracker.data.models.useful.User
+import com.rma.expensetracker.data.models.mock.User
 import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNavBarItems
 import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNavBarState
 import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNavItem
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MainViewModel() : ViewModel() {
+class MainViewModel : ViewModel() {
     private val _currentUser: StateFlow<User?> = CurrentUser.currentUser
     private val _userLoggedIn = MutableStateFlow(
         _currentUser

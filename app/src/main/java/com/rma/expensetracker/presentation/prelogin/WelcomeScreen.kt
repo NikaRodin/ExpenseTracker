@@ -34,9 +34,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rma.expensetracker.R
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
-fun WelcomeScreen(viewModel: WelcomeScreenViewModel = WelcomeScreenViewModel()) {
+fun WelcomeScreen(viewModel: WelcomeScreenViewModel = viewModel()) {
 
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
@@ -79,13 +79,11 @@ fun WelcomeScreen(viewModel: WelcomeScreenViewModel = WelcomeScreenViewModel()) 
         ElevatedCard(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
             elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-            modifier = Modifier
-                .wrapContentSize(align = Alignment.Center)
+            modifier = Modifier.wrapContentSize()
         ){
-            Column(
-                modifier = Modifier
-                    .wrapContentSize(align = Alignment.Center)
-                    .padding(10.dp)
+            Column(modifier = Modifier
+                .wrapContentSize()
+                .padding(10.dp)
             ){
                 Row (modifier = Modifier.padding(10.dp)) {
                     Text(text = cardTitle, fontWeight = FontWeight.Bold)
