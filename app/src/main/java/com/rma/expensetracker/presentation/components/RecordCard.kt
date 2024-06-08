@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.postlogin.components
+package com.rma.expensetracker.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,7 +35,8 @@ fun RecordCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .height(100.dp)
+            .height(100.dp),
+        onClick = onClick
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -116,7 +117,10 @@ fun RecordCard(
                     }*/
                     item {
                         Box(modifier = Modifier.padding(horizontal = 2.dp)) {
-                            CategoryTag(text = record.category.title)
+                            CategoryTag(
+                                text = record.category.title,
+                                color = record.category.color
+                            )
                         }
                     }
                 }

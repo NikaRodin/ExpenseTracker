@@ -18,6 +18,13 @@ object PostLoginDestinations {
             get() = "records-screen"
     }
 
+    val RecordDetailsScreen = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument>
+            get() = emptyList()
+        override val destination: String
+            get() = "record-details-screen"
+    }
+
     val SavingsScreen = object : NavigationCommand {
         override val arguments: List<NamedNavArgument>
             get() = emptyList()
@@ -83,4 +90,22 @@ object PostLoginDestinations {
         override val destination: String
             get() = "apiInfo"
     }*/
+
+    /*
+    object RecordDetailsScreen {
+        const val KEY_PLAN_ID = "recordId"
+        const val destination: String = "plan/{$KEY_PLAN_ID}"
+
+        val definedArguments: List<NamedNavArgument> = listOf(
+            navArgument(KEY_PLAN_ID) { type = NavType.StringType }
+        )
+
+        fun recordRoute(recordId: String) = object : NavigationCommand {
+            override val arguments: List<NamedNavArgument>
+                get() = definedArguments
+            override val destination: String
+                get() = "record/$recordId"
+        }
+    }
+    */
 }

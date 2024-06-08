@@ -30,6 +30,8 @@ fun mapRecordMockToRecord(recordMock: RecordMock) : Record {
         amount = recordMock.amount,
         date = recordMock.date,
         isGroupRecord = recordMock.isGroupRecord,
+        notes = recordMock.notes,
+        photos = recordMock.photos,
         accountId = recordMock.accountId,
         user = MockUsersDatabase.getUserById(recordMock.userId),
         category = MockCategoryDatabase.getCategoryById(recordMock.categoryId)

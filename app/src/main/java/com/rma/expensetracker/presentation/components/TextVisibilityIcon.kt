@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.prelogin.components
+package com.rma.expensetracker.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

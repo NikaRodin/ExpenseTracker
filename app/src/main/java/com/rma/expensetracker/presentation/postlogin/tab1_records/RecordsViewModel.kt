@@ -1,12 +1,15 @@
 package com.rma.expensetracker.presentation.postlogin.tab1_records
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
 import com.rma.expensetracker.common.CurrentUser
+import com.rma.expensetracker.common.SelectedRecordId
 import com.rma.expensetracker.data.interactors.AccountInteractor
 import com.rma.expensetracker.data.interactors.RecordInteractor
 import com.rma.expensetracker.data.models.mock.Account
 import com.rma.expensetracker.data.models.mock.User
 import com.rma.expensetracker.data.models.useful.Record
+import com.rma.expensetracker.presentation.navigation.directions.PostLoginDestinations
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -22,9 +25,6 @@ class RecordsViewModel : ViewModel() {
     init {
         //showLoading()
         getAllCurrentUserAccounts()
-        if(accountsList.value.isNotEmpty()) {
-            updateRecordsList(accountsList.value[0].id) //MOŽDA NE
-        }
     }
 
     private fun getAllCurrentUserAccounts() {
@@ -37,4 +37,12 @@ class RecordsViewModel : ViewModel() {
         _recordsList.value = records
     }
 
+    fun onRecordClicked(recordId: String, navController:NavHostController) {
+        SelectedRecordId.updateSelectedRecordId(recordId)
+        navController.navigate(
+            PostLoginDestinations.RecordDetailsScreen.destination
+        ){
+            launchSingleTop = true
+        }
+    }
 }

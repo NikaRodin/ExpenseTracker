@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -35,7 +36,6 @@ import com.rma.expensetracker.presentation.navigation.directions.PostLoginDestin
 import com.rma.expensetracker.presentation.navigation.directions.PreLoginDestinations
 import com.rma.expensetracker.presentation.navigation.postLoginNavGraph
 import com.rma.expensetracker.presentation.navigation.preLoginNavGraph
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun MainComposable(
@@ -46,19 +46,20 @@ fun MainComposable(
     val startDestination = if(!userLoggedIn) PreLoginDestinations.Root.destination
                             else PostLoginDestinations.Root.destination
 
-    val bottomNavBarState by viewModel.bottomNavBarState.collectAsState()
+    val isBottomNavBarVisible by viewModel.isBottomNavBarVisible.collectAsState()
+    val bottomNavItems by viewModel.bottomNavItems.collectAsState()
     val selectedBottomNavItem by viewModel.selectedBottomNavItem.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             AnimatedVisibility(
-                visible = bottomNavBarState.isVisible,
+                visible = isBottomNavBarVisible,
                 enter = slideInVertically(initialOffsetY = { it }),
                 exit = slideOutVertically(targetOffsetY = { it })
             ) {
                 BottomNavigation(backgroundColor = MaterialTheme.colorScheme.surfaceVariant) {
-                    bottomNavBarState.items.forEach { item ->
+                    bottomNavItems.forEach { item ->
                         BottomNavigationItem(
                             modifier = Modifier.padding(4.dp),
                             selected = item == selectedBottomNavItem,

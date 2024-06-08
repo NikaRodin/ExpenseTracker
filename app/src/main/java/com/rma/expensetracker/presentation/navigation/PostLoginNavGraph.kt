@@ -8,12 +8,15 @@ import com.rma.expensetracker.presentation.navigation.directions.PostLoginDestin
 import com.rma.expensetracker.presentation.postlogin.AddNewRecordScreen
 import com.rma.expensetracker.presentation.postlogin.gallery.GalleryScreen
 import com.rma.expensetracker.presentation.postlogin.settings.SettingsScreen
+import com.rma.expensetracker.presentation.postlogin.tab1_records.RecordDetailsScreen
 import com.rma.expensetracker.presentation.postlogin.tab1_records.RecordsScreen
 import com.rma.expensetracker.presentation.postlogin.tab2_savings.SavingsScreen
 import com.rma.expensetracker.presentation.postlogin.tab3_groups.GroupsScreen
 import com.rma.expensetracker.presentation.postlogin.tab4_budget.BudgetScreen
 
-fun NavGraphBuilder.postLoginNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.postLoginNavGraph(
+    navController: NavHostController
+) {
 
     navigation(
         startDestination = PostLoginDestinations.RecordsScreen.destination,
@@ -24,6 +27,12 @@ fun NavGraphBuilder.postLoginNavGraph(navController: NavHostController) {
             arguments = PostLoginDestinations.RecordsScreen.arguments
         ) {
             RecordsScreen(navController)
+        }
+        composable(
+            route = PostLoginDestinations.RecordDetailsScreen.destination,
+            arguments = PostLoginDestinations.RecordDetailsScreen.arguments
+        ) {
+            RecordDetailsScreen(navController)
         }
         composable(
             route = PostLoginDestinations.SavingsScreen.destination,

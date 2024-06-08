@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.postlogin.components
+package com.rma.expensetracker.presentation.components
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
