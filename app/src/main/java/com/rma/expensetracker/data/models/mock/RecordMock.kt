@@ -6,7 +6,7 @@ import java.time.LocalDate
 data class RecordMock(
     val id: String,
     val title: String,
-    val amount: Float,
+    val amount: Double,
     val date: LocalDate,
     val isGroupRecord: Boolean,
     val notes: String? = null,
@@ -19,7 +19,7 @@ data class RecordMock(
 data class SubRecordMock(
     val id: String,
     val title: String,
-    val amount: Float,
+    val amount: Double,
     val parentRecordId: String,
     val categoryId: String,
 )

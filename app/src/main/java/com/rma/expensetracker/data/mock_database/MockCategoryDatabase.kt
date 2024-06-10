@@ -23,6 +23,30 @@ object MockCategoryDatabase {
             color = Color.Green,
             userId = "anneId"
         ),
+        Category(
+            id = "domAnne",
+            title = "dom",
+            color = Color.Magenta,
+            userId = "anneId"
+        ),
+        Category(
+            id = "odmorAnne",
+            title = "odmor",
+            color = Color.Cyan,
+            userId = "anneId"
+        ),
+        Category(
+            id = "kucniLjubimacAnne",
+            title = "kućni ljubimac",
+            color = Color.Gray,
+            userId = "anneId"
+        ),
+        Category(
+            id = "zabavaAnne",
+            title = "zabava",
+            color = Color(255,146, 30),
+            userId = "anneId"
+        ),
 
         //////
 

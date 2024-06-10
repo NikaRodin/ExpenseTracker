@@ -35,13 +35,13 @@ fun RecordDetailsScreen(
             if(!isEditModeOn)
                 BackButton(navController)
             else
-                DismissButton(viewModel::onDimissClicked)
+                DismissButton(viewModel::onDismissClicked)
         }, actions = {
             if(!isEditModeOn) {
                 EditButton(viewModel::onEditClicked)
-                DeleteButton(viewModel::onDeleteClicked)
+                DeleteButton(viewModel::onTrashcanClicked)
             } else {
-                SaveButton(viewModel::onSaveClicked)
+                SaveButton { viewModel.onSaveClicked() }
             }
         }
     ) { innerPadding ->
@@ -55,7 +55,12 @@ fun RecordDetailsScreen(
             else if (isEditModeOn)
                 EditRecordInfo(viewModel)
             else
-                PreviewRecordInfo(currentRecord!!, currentAccount)
+                PreviewRecordInfo(
+                    currentRecord!!,
+                    currentAccount,
+                    viewModel,
+                    navController
+                )
         }
     }
 }

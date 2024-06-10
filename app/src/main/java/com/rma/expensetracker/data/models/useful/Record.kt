@@ -8,7 +8,7 @@ import java.time.LocalDate
 data class Record(
     val id: String,
     val title: String,
-    val amount: Float,
+    val amount: Double,
     val date: LocalDate,
     val isGroupRecord: Boolean,
     val notes: String? = null,

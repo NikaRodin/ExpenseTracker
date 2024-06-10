@@ -15,22 +15,29 @@ fun NumericalInputField(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
 ) {
-    val maxLength = 10
     OutlinedTextField(
         value = value,
         label = label,
         onValueChange = {
-            if (it.length <= maxLength) {
+            val numDecPoints = it.count { char -> char == '.' }
+            if (numDecPoints <= 1) {
                 val filteredText = it.filter { char -> char.isDigit() || char == '.' }
+
+                var integerPart = filteredText
+                var decimalPart = ""
                 val decimalIndex = filteredText.indexOf('.')
-                val validText = if (decimalIndex >= 0) {
-                    val integerPart = filteredText.substring(0, decimalIndex)
-                    val decimalPart = filteredText.substring(decimalIndex + 1).take(2)
-                    "$integerPart.$decimalPart"
-                } else {
-                    filteredText
+
+                if (decimalIndex >= 0) {
+                    decimalPart = filteredText.substring(decimalIndex + 1)
+                    integerPart = filteredText.substring(0, decimalIndex)
                 }
-                onValueChange(validText)
+
+                if(integerPart.length <= 8 && decimalPart.length <= 2) {
+                    var validText = filteredText
+                    if (decimalIndex >= 0)
+                        validText = "$integerPart.$decimalPart"
+                    onValueChange(validText)
+                }
             }
         },
         leadingIcon = leadingIcon,

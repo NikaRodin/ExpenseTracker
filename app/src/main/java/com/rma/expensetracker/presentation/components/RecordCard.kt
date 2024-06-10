@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rma.expensetracker.R
 import com.rma.expensetracker.data.models.useful.Record
+import java.util.Locale
 
 @Composable
 fun RecordCard(
@@ -83,6 +85,7 @@ fun RecordCard(
                         text = "${record.user.firstName} ${record.user.lastName}",
                         style = MaterialTheme.typography.labelSmall
                     )
+                    Spacer(modifier = Modifier.padding(horizontal = 2.dp))
                     Icon(
                         imageVector = Icons.Outlined.AccountCircle,
                         contentDescription = "" //TODO dohvati ime usera
@@ -100,7 +103,11 @@ fun RecordCard(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = if(record.amount >= 0) "+${record.amount}" else "${record.amount}",
+                        text = if(record.amount > 0) {
+                            "+${String.format(Locale.US, "%.2f", record.amount)}"
+                        } else {
+                            String.format(Locale.US, "%.2f", record.amount)
+                        },
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -110,16 +117,10 @@ fun RecordCard(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp)
                 ) {
-                    /*items(record.categories) { category ->
-                        Box(modifier = Modifier.padding(horizontal = 2.dp)) {
-                            CategoryTag(text = category.title)
-                        }
-                    }*/
                     item {
                         Box(modifier = Modifier.padding(horizontal = 2.dp)) {
                             CategoryTag(
-                                text = record.category.title,
-                                color = record.category.color
+                                category = record.category
                             )
                         }
                     }

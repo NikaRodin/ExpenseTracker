@@ -73,4 +73,21 @@
     <string name="edit_record_date_field_label">Datum</string>
     <string name="edit_record_notes_field_label">Bilješke</string>
     <string name="edit_record_acc_field_label">Račun</string>
+    <string name="edit_category">Edit category</string>
+    <string name="save">Spremi</string>
+    <string name="pick_category">Odaberi kategoriju</string>
+    <string name="add_new_record">Dodavanje stavke</string>
+    <string name="edit_record_title_placeholder">Upiši naziv...</string>
+    <string name="edit_record_date_placeholder">Odaberi datum</string>
+    <string name="edit_record_acc_placeholder">Odaberi račun</string>
+    <string name="edit_record_notes_placeholder">Upiši bilješku...</string>
+    <string name="record_title_empty_warning">Naziv ne smije biti prazan!</string>
+    <string name="add_category_to_record">Dodaj kategoriju</string>
+    <string name="add">Add</string>
+    <string name="settings">Postavke</string>
+    <string name="logout_icon_label_description">Logout</string>
+    <string name="logout">Odjava</string>
+    <string name="delete">Izbriši</string>
+    <string name="are_you_sure_you_want_to_delete">Jeste li sigurni da želite izbrisati ovu stavku?</string>
+    <string name="cancel">Odustani</string>
 </resources>

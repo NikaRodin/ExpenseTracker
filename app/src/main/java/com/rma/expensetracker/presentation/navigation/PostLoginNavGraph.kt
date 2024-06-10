@@ -44,7 +44,7 @@ fun NavGraphBuilder.postLoginNavGraph(
             route = PostLoginDestinations.AddNewRecordScreen.destination,
             arguments = PostLoginDestinations.AddNewRecordScreen.arguments
         ) {
-            AddNewRecordScreen()
+            AddNewRecordScreen(navController)
         }
         composable(
             route = PostLoginDestinations.GroupsScreen.destination,
@@ -68,7 +68,7 @@ fun NavGraphBuilder.postLoginNavGraph(
             route = PostLoginDestinations.SettingsScreen.destination,
             arguments = PostLoginDestinations.SettingsScreen.arguments
         ) {
-            SettingsScreen()
+            SettingsScreen(navController)
         }
     }
 }

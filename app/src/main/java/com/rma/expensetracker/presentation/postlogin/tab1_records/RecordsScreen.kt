@@ -36,6 +36,7 @@ import com.rma.expensetracker.presentation.components.PagerComponent
 import com.rma.expensetracker.presentation.components.RecordCard
 import com.rma.expensetracker.presentation.components.SettingsIcon
 import com.rma.expensetracker.presentation.components.TopAppBarLayout
+import java.util.Locale
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -88,8 +89,15 @@ fun RecordsScreen(
             }
 
             // Sticky action bar
-            val balance = if(accountsList.isEmpty()) "?"
-                          else accountsList[currentAccountIndex.intValue].balance.toString()
+            val balance = if(accountsList.isEmpty()) {
+                "?"
+            } else {
+                String.format(
+                    Locale.US,
+                    "%.2f",
+                    accountsList[currentAccountIndex.intValue].balance
+                )
+            }
 
             stickyHeader {
                 Column( modifier = Modifier

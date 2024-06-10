@@ -13,20 +13,32 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.rma.expensetracker.R
 import com.rma.expensetracker.data.models.mock.Account
 import com.rma.expensetracker.data.models.useful.Record
 import com.rma.expensetracker.presentation.components.CategoryTag
+import com.rma.expensetracker.presentation.components.PopUpDialog
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PreviewRecordInfo(record: Record, account: Account?) {
+fun PreviewRecordInfo(
+    record: Record,
+    account: Account?,
+    viewModel: RecordDetailsViewModel,
+    navController: NavHostController
+) {
+    val isDeleteDialogOpen by viewModel.isDeleteDialogOpen.collectAsState()
+
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -34,7 +46,11 @@ fun PreviewRecordInfo(record: Record, account: Account?) {
     ) {
         SimpleDataRow {
             DataText(text = record.title)
-            DataText(text = if(record.amount >= 0) "+${record.amount}" else "${record.amount}")
+            DataText(text = if(record.amount > 0) {
+                "+${String.format(Locale.US, "%.2f", record.amount)}"
+            } else {
+                String.format(Locale.US, "%.2f", record.amount)
+            })
         }
         SimpleDataRow {
             DataText(text = stringResource(R.string.date) + ":")
@@ -51,16 +67,29 @@ fun PreviewRecordInfo(record: Record, account: Account?) {
             DataText(text = stringResource(R.string.categories) + ":")
             FlowRow(modifier = Modifier.padding(8.dp)) {
                 CategoryTag(
-                    text = record.category.title,
-                    color = record.category.color
+                    category = record.category
                 )
             }
 
         }
+
+        PopUpDialog(
+            message = stringResource(R.string.are_you_sure_you_want_to_delete) ,
+            dismissButtonText = stringResource(R.string.cancel),
+            confirmButtonText = stringResource(R.string.delete),
+            isOpen = isDeleteDialogOpen,
+            onDismiss = viewModel::onDeleteDismissed,
+            onConfirm = { viewModel.onDeleteConfirmed(navController) }
+        )
+
         SimpleDataColumn {
             DataText(text = stringResource(R.string.notes) + ":")
             Text(
-                text = record.notes?: stringResource(R.string.no_notes),
+                text = if(record.notes.isNullOrBlank()){
+                    stringResource(R.string.no_notes)
+                } else {
+                    record.notes
+                },
                 textAlign = TextAlign.Justify
             )
         }

@@ -1,10 +1,9 @@
-package com.rma.expensetracker.presentation.postlogin.tab1_records
+package com.rma.expensetracker.presentation.postlogin
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.rma.expensetracker.common.BottomNavBarIndicator
 import com.rma.expensetracker.common.CurrentUser
-import com.rma.expensetracker.common.SelectedRecordId
 import com.rma.expensetracker.common.ToastState
 import com.rma.expensetracker.data.interactors.AccountInteractor
 import com.rma.expensetracker.data.interactors.CategoryInteractor
@@ -12,33 +11,19 @@ import com.rma.expensetracker.data.interactors.RecordInteractor
 import com.rma.expensetracker.data.models.mock.Account
 import com.rma.expensetracker.data.models.mock.Category
 import com.rma.expensetracker.data.models.mock.RecordMock
-import com.rma.expensetracker.data.models.useful.Record
 import com.rma.expensetracker.presentation.components.InputFieldState
 import com.rma.expensetracker.presentation.components.NumericalInputFieldState
-import com.rma.expensetracker.presentation.navigation.directions.PostLoginDestinations
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-import java.util.Locale
-import kotlin.math.absoluteValue
+import java.util.UUID
 
-class RecordDetailsViewModel : ViewModel() {
-    private val recordId: StateFlow<String?> = SelectedRecordId.selectedRecordId
-
-    private val _currentRecord = MutableStateFlow<Record?>(null)
-    val currentRecord: StateFlow<Record?> = _currentRecord
-
-    private val _currentAccount = MutableStateFlow<Account?>(null)
-    val currentAccount: StateFlow<Account?> = _currentAccount
-
+class AddNewRecordViewModel : ViewModel() {
     private val _accountsList = MutableStateFlow(emptyList<Account>())
     val accountsList: StateFlow<List<Account>> = _accountsList
-
-    private val _isEditModeOn = MutableStateFlow(false)
-    val isEditModeOn: StateFlow<Boolean> = _isEditModeOn
 
     private val _isTypeMenuExpanded = MutableStateFlow(false)
     val isTypeMenuExpanded: StateFlow<Boolean> = _isTypeMenuExpanded
@@ -64,8 +49,6 @@ class RecordDetailsViewModel : ViewModel() {
     private val _isCategoryPickerOpen = MutableStateFlow(false)
     val isCategoryPickerOpen: StateFlow<Boolean> = _isCategoryPickerOpen
 
-    private val _isDeleteDialogOpen = MutableStateFlow(false)
-    val isDeleteDialogOpen: StateFlow<Boolean> = _isDeleteDialogOpen
 
     private val _titleState = MutableStateFlow(
         InputFieldState(
@@ -102,15 +85,11 @@ class RecordDetailsViewModel : ViewModel() {
 
     init {
         //showLoading()
+        resetScreen()
         BottomNavBarIndicator.hideBottomNavBar()
-        resetPreviewScreen()
-        resetEditScreen()
     }
 
-    private fun resetPreviewScreen() {
-        _currentRecord.value = recordId.value?.let { RecordInteractor.getRecordById(it) }
-        _currentAccount.value = _currentRecord.value?.let { AccountInteractor.getAccountById(it.accountId) }
-
+    private fun resetScreen() {
         val accounts = CurrentUser.currentUser.value?.let {
             AccountInteractor.getAccountsByUserId(it.id)
         }
@@ -120,65 +99,34 @@ class RecordDetailsViewModel : ViewModel() {
             CategoryInteractor.getCategoriesByUserId(it.id)
         }
         _categoriesList.value = categories?: emptyList()
-    }
-
-    fun resetEditScreen() {
-        _currentRecord.value?.let {
-            onTitleTextChange(it.title)
-        }
-        _currentRecord.value?.let {
-            onAmountChange(String.format(Locale.US, "%.2f", it.amount.absoluteValue))
-            _isExpense.value  = (it.amount < 0)
-        }
-        _currentRecord.value?.let {
-            onDateChange(it.date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-        }
-        _currentRecord.value?.let {
-            it.notes?.let { notes -> onNotesTextChange(notes) }
-        }
-        if(currentAccount.value != null && accountsList.value.isNotEmpty()){
-            _selectedAccount.value = _accountsList.value.indexOfFirst {
-                currentAccount.value!!.id == it.id
-            }
-        }
-        _currentRecord.value?.let {
-            _category.value = it.category
-        }
 
         if(_category.value != null){
             _selectedCategoryId.value = _category.value!!.id
         }
     }
 
-    fun onEditClicked() { _isEditModeOn.value = true }
-
-    fun onTrashcanClicked() {
-        _isDeleteDialogOpen.value = true
+    fun onDismissClicked(navController: NavController) {
+        navController.popBackStack()
+        BottomNavBarIndicator.activateLastActiveBottomNavItem()
+        BottomNavBarIndicator.showBottomNavBar()
     }
 
-    fun onDeleteDismissed() {
-        _isDeleteDialogOpen.value = false
-    }
-
-    fun onDeleteConfirmed(navController: NavController) {
-        onDeleteDismissed()
-        recordId.value?.let {
-            RecordInteractor.deleteRecord(it)
-            ToastState.triggerToast("Stavka izbrisana.")
-            navController.navigate(PostLoginDestinations.RecordsScreen.destination) {
-                popUpTo(0)
-                launchSingleTop = true
-            }
-        }
-    }
-
-    fun onDismissClicked() { _isEditModeOn.value = false }
-
-    fun onSaveClicked() {
-        if(currentRecord.value != null && category.value != null && recordId.value != null) {
-
+    fun onSaveClicked(navController: NavController) {
+        if(CurrentUser.currentUser.value != null) {
             if(titleState.value.text.isBlank()) {
                 ToastState.triggerToast("Naziv ne smije biti prazan!")
+                return
+            }
+            if(dateState.value.text.isBlank()) {
+                ToastState.triggerToast("Odaberite datum!")
+                return
+            }
+            if(selectedAccount.value == -1) {
+                ToastState.triggerToast("Odaberite račun!")
+                return
+            }
+            if(category.value == null) {
+                ToastState.triggerToast("Odaberite kategoriju!")
                 return
             }
 
@@ -190,21 +138,21 @@ class RecordDetailsViewModel : ViewModel() {
             newAmount = if(isExpense.value && newAmount != 0.00) -newAmount else newAmount
 
             val newRecord = RecordMock(
-                id = recordId.value!!,
+                id = UUID.randomUUID().toString(),
                 title = titleState.value.text,
                 amount = newAmount,
                 date = stringToLocalDate(dateState.value.text)?: LocalDate.now(),
-                isGroupRecord = currentRecord.value!!.isGroupRecord,
+                isGroupRecord = false,
                 notes = notesState.value.text,
-                photos = currentRecord.value!!.photos,
-                userId = currentRecord.value!!.user.id,
+                photos = emptyList(),
+                userId = CurrentUser.currentUser.value!!.id,
                 accountId = accountsList.value[selectedAccount.value].id,
                 categoryId = category.value!!.id
             )
 
-            RecordInteractor.updateRecord(recordId.value!!, newRecord)
-            resetPreviewScreen()
-            onDismissClicked()
+            RecordInteractor.addRecord(newRecord)
+            ToastState.triggerToast("Stavka dodana.")
+            onDismissClicked(navController)
         } else {
             ToastState.triggerToast("Greška")
         }

@@ -2,31 +2,41 @@ package com.rma.expensetracker.presentation.postlogin.tab1_records
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.rma.expensetracker.R
-import com.rma.expensetracker.presentation.components.ChipsDialog
+import com.rma.expensetracker.data.models.mock.Account
+import com.rma.expensetracker.data.models.mock.Category
+import com.rma.expensetracker.presentation.components.CategoryPicker
+import com.rma.expensetracker.presentation.components.CategoryTag
 import com.rma.expensetracker.presentation.components.DateInputField
 import com.rma.expensetracker.presentation.components.DropdownComponent
+import com.rma.expensetracker.presentation.components.InputFieldState
 import com.rma.expensetracker.presentation.components.NumericalInputField
+import com.rma.expensetracker.presentation.components.NumericalInputFieldState
 
 @Composable
 fun EditRecordInfo(
@@ -41,15 +51,74 @@ fun EditRecordInfo(
     val isAccountMenuExpanded by viewModel.isAccountMenuExpanded.collectAsState()
     val selectedAccount by viewModel.selectedAccount.collectAsState()
     val accountsList by viewModel.accountsList.collectAsState()
-
-    val recordTypes: List<String> = listOf(
-        stringResource(R.string.expense),
-        stringResource(R.string.income)
-    )
+    val categoriesList by viewModel.categoriesList.collectAsState()
+    val category by viewModel.category.collectAsState()
+    val selectedCategoryId by viewModel.selectedCategoryId.collectAsState()
+    val isCategoryPickerOpen by viewModel.isCategoryPickerOpen.collectAsState()
 
     LaunchedEffect(true) {
         viewModel.resetEditScreen()
     }
+
+    //hahahahahahahhaha strašno
+    EditRecordInfoContent(
+        titleState,
+        amountState,
+        dateState,
+        notesState,
+        isTypeMenuExpanded,
+        isExpense,
+        isAccountMenuExpanded,
+        selectedAccount,
+        accountsList,
+        categoriesList,
+        category,
+        selectedCategoryId,
+        isCategoryPickerOpen,
+        viewModel::onCategorySelected,
+        viewModel::closeCategoryPicker,
+        viewModel::onCategorySaved,
+        viewModel::openCategoryPicker,
+        viewModel::onAccountMenuArrowClicked,
+        viewModel::onAccountSelected,
+        viewModel::onDateChange,
+        viewModel::onTypeMenuArrowClicked,
+        viewModel::onRecordTypeSelected,
+        viewModel::onAmountChange
+    )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun EditRecordInfoContent(
+    titleState: InputFieldState,
+    amountState: NumericalInputFieldState,
+    dateState: InputFieldState,
+    notesState: InputFieldState,
+    isTypeMenuExpanded: Boolean,
+    isExpense: Boolean,
+    isAccountMenuExpanded: Boolean,
+    selectedAccount: Int,
+    accountsList: List<Account>,
+    categoriesList: List<Category>,
+    category: Category?,
+    selectedCategoryId: String?,
+    isCategoryPickerOpen: Boolean,
+    onCategorySelected: (String) -> Unit,
+    closeCategoryPicker: () -> Unit,
+    onCategorySaved: () -> Unit,
+    openCategoryPicker: (String?) -> Unit,
+    onAccountMenuArrowClicked: () -> Unit,
+    onAccountSelected: (Int) -> Unit,
+    onDateChange: (String) -> Unit,
+    onTypeMenuArrowClicked: () -> Unit,
+    onRecordTypeSelected: (Int) -> Unit,
+    onAmountChange: (String) -> Unit
+) {
+    val recordTypes: List<String> = listOf(
+        stringResource(R.string.expense),
+        stringResource(R.string.income)
+    )
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -65,6 +134,7 @@ fun EditRecordInfo(
             value = titleState.text,
             onValueChange = titleState.onTextChange,
             label = { Text(stringResource(id = R.string.edit_record_title_field_label)) },
+            placeholder = { Text(stringResource(id = R.string.edit_record_title_placeholder)) }
         )
 
         Row(
@@ -78,8 +148,8 @@ fun EditRecordInfo(
                 value = if(isExpense) recordTypes[0] else recordTypes[1],
                 menuItems = recordTypes,
                 isMenuExpanded = isTypeMenuExpanded,
-                onArrowClicked = viewModel::onTypeMenuArrowClicked,
-                onItemSelected = viewModel::onRecordTypeSelected,
+                onArrowClicked = onTypeMenuArrowClicked,
+                onItemSelected = onRecordTypeSelected,
                 label = { Text(stringResource(id = R.string.edit_record_type_field_label)) }
             )
 
@@ -90,7 +160,7 @@ fun EditRecordInfo(
                     .fillMaxWidth()
                     .weight(0.6f),
                 value = amountState.value,
-                onValueChange = { newValue -> viewModel.onAmountChange(newValue) },
+                onValueChange = { newValue -> onAmountChange(newValue) },
                 label = { Text(stringResource(id = R.string.edit_record_amount_field_label)) },
                 leadingIcon = { Text(if(isExpense) "-" else "+") },
                 trailingIcon = { Text("€") }
@@ -99,11 +169,11 @@ fun EditRecordInfo(
 
         DateInputField(
             date = dateState.text,
-            onDateSelected = viewModel::onDateChange,
+            onDateSelected = onDateChange,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
-            label = { Text(stringResource(id = R.string.edit_record_date_field_label)) }
+            label = { Text(stringResource(id = R.string.edit_record_date_field_label)) },
         )
 
         DropdownComponent(
@@ -113,36 +183,61 @@ fun EditRecordInfo(
             value = if(selectedAccount != -1) accountsList[selectedAccount].title else "",
             menuItems = accountsList.map { acc -> acc.title },
             isMenuExpanded = isAccountMenuExpanded,
-            onArrowClicked = viewModel::onAccountMenuArrowClicked,
-            onItemSelected = viewModel::onAccountSelected,
-            label = { Text(stringResource(id = R.string.edit_record_acc_field_label)) }
+            onArrowClicked = onAccountMenuArrowClicked,
+            onItemSelected = onAccountSelected,
+            label = { Text(stringResource(id = R.string.edit_record_acc_field_label)) },
         )
 
-        var isDialogOpen by remember { mutableStateOf(false) }
-        var savedChips by remember { mutableStateOf(listOf<String>()) }
-
-        Button(onClick = { isDialogOpen = true }) {
-            Text("+")
+        SimpleDataColumn {
+            DataText(text = stringResource(R.string.categories) + ":")
+            if(category != null) {
+                FlowRow(modifier = Modifier.padding(8.dp)) {
+                    CategoryTag(
+                        category = category,
+                        onClick = openCategoryPicker,
+                        trailingIcon = { Icon(
+                            Icons.Outlined.Edit,
+                            contentDescription = stringResource(R.string.edit_category),
+                        )}
+                    )
+                }
+            } else {
+                AssistChip(
+                    onClick = { openCategoryPicker(null) },
+                    label = { Text(stringResource(R.string.add_category_to_record)) },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Filled.Add,
+                            contentDescription = stringResource(R.string.add),
+                            Modifier.size(AssistChipDefaults.IconSize)
+                        )
+                    }
+                )
+            }
         }
 
-        Text("Saved Chips: ${savedChips.joinToString(", ")}")
-
-        ChipsDialog(
-            isOpen = isDialogOpen,
-            onDismissRequest = { isDialogOpen = false },
-            onSave = { newChips -> savedChips = newChips }
+        CategoryPicker(
+            categories = categoriesList,
+            isOpen = isCategoryPickerOpen,
+            selectedCategoryId = selectedCategoryId,
+            onCategorySelected = onCategorySelected,
+            onDismissRequest = closeCategoryPicker,
+            onSave = onCategorySaved
         )
 
-
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            value = notesState.text,
-            minLines = 3,
-            maxLines = 5,
-            onValueChange = notesState.onTextChange,
-            label = { Text(stringResource(id = R.string.edit_record_notes_field_label)) },
-        )
+        SimpleDataColumn {
+            DataText(text = stringResource(R.string.notes) + ":")
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                value = notesState.text,
+                minLines = 3,
+                maxLines = 5,
+                onValueChange = notesState.onTextChange,
+                //label = { Text(stringResource(id = R.string.edit_record_notes_field_label)) },
+                placeholder = { Text(stringResource(id = R.string.edit_record_notes_placeholder)) }
+            )
+        }
     }
 }

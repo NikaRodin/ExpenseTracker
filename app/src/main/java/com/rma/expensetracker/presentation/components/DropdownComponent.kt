@@ -38,7 +38,7 @@ fun DropdownComponent(
     isMenuExpanded: Boolean = false,
     onArrowClicked: () -> Unit,
     onItemSelected: (Int) -> Unit,
-    label:  @Composable (() -> Unit)? = null,
+    label:  @Composable (() -> Unit)? = null
 ) {
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
     Column(modifier = modifier) {

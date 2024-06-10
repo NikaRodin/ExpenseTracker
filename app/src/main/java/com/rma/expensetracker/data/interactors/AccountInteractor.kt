@@ -17,4 +17,13 @@ object AccountInteractor {
     fun addAccount(userIds: List<String>, account: Account) {
         MockAccountsDatabase.addAccount(userIds, account)
     }
+
+    fun updateBalance(accId: String) {
+        val records = RecordInteractor.getRecordsByAccountId(accId)
+        var updatedBalance = 0.00
+        records.forEach {
+            updatedBalance += it.amount
+        }
+        MockAccountsDatabase.setBalance(accId, updatedBalance)
+    }
 }

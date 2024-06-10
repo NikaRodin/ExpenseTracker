@@ -5,14 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.rma.expensetracker.common.BottomNavBarIndicator
 import com.rma.expensetracker.common.CurrentUser
 import com.rma.expensetracker.data.models.mock.User
-import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNavBarItems
 import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNavItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -26,8 +24,7 @@ class MainViewModel : ViewModel() {
     val isBottomNavBarVisible: StateFlow<Boolean> = BottomNavBarIndicator.isBottomNavBarVisible
     val bottomNavItems: StateFlow<List<BottomNavItem>> = BottomNavBarIndicator.bottomNavItems
 
-    private val _selectedBottomNavItem = MutableStateFlow(bottomNavItems.value[0])
-    val selectedBottomNavItem: StateFlow<BottomNavItem?> = _selectedBottomNavItem
+    val selectedBottomNavItem: StateFlow<BottomNavItem> = BottomNavBarIndicator.selectedBottomNavItem
 
     init {
         viewModelScope.launch {
@@ -40,6 +37,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun onBottomNavElementClicked(item: BottomNavItem) {
-        _selectedBottomNavItem.update { item }
+        BottomNavBarIndicator.updateSelectedBottomNavItem(item)
+        if(item.direction != BottomNavItem.BottomNavDirection.ADD) {
+            BottomNavBarIndicator.updateLastActiveBottomNavItem(item)
+        }
     }
 }

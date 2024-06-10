@@ -21,5 +21,19 @@ object RecordInteractor {
 
     fun addRecord(record: RecordMock) {
         MockRecordsDatabase.addRecord(record)
+        AccountInteractor.updateBalance(record.accountId)
+    }
+
+    fun deleteRecord(recordId: String) {
+        val accId = getRecordById(recordId).accountId
+        MockRecordsDatabase.deleteRecord(recordId)
+        AccountInteractor.updateBalance(accId)
+    }
+
+    fun updateRecord(recordId: String, newRecord: RecordMock) {
+        val accId = getRecordById(recordId).accountId
+        MockRecordsDatabase.updateRecord(recordId, newRecord)
+        AccountInteractor.updateBalance(accId)
+        AccountInteractor.updateBalance(newRecord.accountId)
     }
 }

@@ -5,6 +5,8 @@ import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNa
 import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNavItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 object CurrentUser {
     private val _currentUser = MutableStateFlow<User?>(null)
@@ -24,12 +26,18 @@ object SelectedRecordId {
     }
 }
 
-object BottomNavBarIndicator{
+object BottomNavBarIndicator {
     private val _isBottomNavBarVisible = MutableStateFlow(false)
     val isBottomNavBarVisible: StateFlow<Boolean> = _isBottomNavBarVisible
 
     private val _bottomNavItems = MutableStateFlow(BottomNavBarItems.BOTTOM_NAV_BAR_ITEMS)
     val bottomNavItems: StateFlow<List<BottomNavItem>> = _bottomNavItems
+
+    private val _selectedBottomNavItem = MutableStateFlow(bottomNavItems.value[0])
+    val selectedBottomNavItem: StateFlow<BottomNavItem> = _selectedBottomNavItem
+
+    private val _lastActiveBottomNavItem = MutableStateFlow(selectedBottomNavItem.value)
+    val lastActiveBottomNavItem: StateFlow<BottomNavItem> = _lastActiveBottomNavItem
 
     fun showBottomNavBar() {
         _isBottomNavBarVisible.value = true
@@ -40,5 +48,30 @@ object BottomNavBarIndicator{
 
     fun setBottomNavItems(items: List<BottomNavItem>) {
         if(items.isNotEmpty()) _bottomNavItems.value = items
+    }
+
+    fun updateSelectedBottomNavItem(item: BottomNavItem) {
+        _selectedBottomNavItem.update { item }
+    }
+
+    fun updateLastActiveBottomNavItem(item: BottomNavItem) {
+        _lastActiveBottomNavItem.update { item }
+    }
+
+    fun activateLastActiveBottomNavItem() {
+        _selectedBottomNavItem.value = _lastActiveBottomNavItem.value
+    }
+}
+
+object ToastState {
+    private val _showToast = MutableStateFlow<String?>(null)
+    val showToast: StateFlow<String?>  = _showToast.asStateFlow()
+
+    fun triggerToast(message: String) {
+        _showToast.value = message
+    }
+
+    fun resetToastToNull() {
+        _showToast.value = null
     }
 }

@@ -14,7 +14,6 @@ fun GalleryIcon(navController: NavHostController) {
     IconButton(
         onClick = {
             navController.navigate(PostLoginDestinations.GalleryScreen.destination) {
-                popUpTo(0)
                 launchSingleTop = true
             }
         }

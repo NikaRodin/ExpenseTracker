@@ -134,7 +134,8 @@ fun navigateToItemDestination(item: BottomNavItem, navController: NavHostControl
             BottomNavItem.BottomNavDirection.BUDGET -> PostLoginDestinations.BudgetScreen.destination
         }
     ){
-        popUpTo(0)
+        if(item.direction != BottomNavItem.BottomNavDirection.ADD)
+            popUpTo(0)
         launchSingleTop = true
     }
 }

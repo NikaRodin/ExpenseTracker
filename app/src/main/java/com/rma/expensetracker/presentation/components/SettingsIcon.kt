@@ -15,7 +15,6 @@ fun SettingsIcon(navController: NavHostController) {
     IconButton(
         onClick = {
             navController.navigate(PostLoginDestinations.SettingsScreen.destination) {
-                popUpTo(0)
                 launchSingleTop = true
             }
         }
