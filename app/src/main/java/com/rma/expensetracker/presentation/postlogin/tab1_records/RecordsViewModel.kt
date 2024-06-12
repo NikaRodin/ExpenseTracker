@@ -3,7 +3,7 @@ package com.rma.expensetracker.presentation.postlogin.tab1_records
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.rma.expensetracker.common.CurrentUser
-import com.rma.expensetracker.common.SelectedRecordId
+import com.rma.expensetracker.common.SelectedRecord
 import com.rma.expensetracker.data.interactors.AccountInteractor
 import com.rma.expensetracker.data.interactors.RecordInteractor
 import com.rma.expensetracker.data.models.mock.Account
@@ -38,7 +38,7 @@ class RecordsViewModel : ViewModel() {
     }
 
     fun onRecordClicked(recordId: String, navController:NavHostController) {
-        SelectedRecordId.updateSelectedRecordId(recordId)
+        SelectedRecord.updateSelectedRecordId(recordId)
         navController.navigate(
             PostLoginDestinations.RecordDetailsScreen.destination
         ){

@@ -12,4 +12,12 @@ object UserInteractor {
     fun getUsersByAccountId(accId: String): List<User> {
         return MockGroupDatabase.getUsersByAccountId(accId)
     }
+
+    fun getUserCountByAccountId(accId: String): Int {
+        return getUsersByAccountId(accId).size
+    }
+
+    fun getAllUsers(): List<User> {
+        return MockUsersDatabase.getAllUsers()
+    }
 }

@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.other
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

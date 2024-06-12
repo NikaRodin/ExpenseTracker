@@ -24,8 +24,8 @@ import androidx.navigation.NavHostController
 import com.rma.expensetracker.R
 import com.rma.expensetracker.data.models.mock.Account
 import com.rma.expensetracker.data.models.useful.Record
-import com.rma.expensetracker.presentation.components.CategoryTag
-import com.rma.expensetracker.presentation.components.PopUpDialog
+import com.rma.expensetracker.presentation.components.other.CategoryTag
+import com.rma.expensetracker.presentation.components.dialogs.PopUpDialog
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 

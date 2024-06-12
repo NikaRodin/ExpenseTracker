@@ -46,6 +46,20 @@ object PostLoginDestinations {
             get() = "groups-screen"
     }
 
+    val GroupDetailsScreen = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument>
+            get() = emptyList()
+        override val destination: String
+            get() = "group-details-screen"
+    }
+
+    val AddNewGroupScreen = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument>
+            get() = emptyList()
+        override val destination: String
+            get() = "add_new_group-screen"
+    }
+
     val BudgetScreen = object : NavigationCommand {
         override val arguments: List<NamedNavArgument>
             get() = emptyList()

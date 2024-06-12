@@ -8,14 +8,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -30,13 +26,14 @@ import androidx.compose.ui.unit.dp
 import com.rma.expensetracker.R
 import com.rma.expensetracker.data.models.mock.Account
 import com.rma.expensetracker.data.models.mock.Category
-import com.rma.expensetracker.presentation.components.CategoryPicker
-import com.rma.expensetracker.presentation.components.CategoryTag
-import com.rma.expensetracker.presentation.components.DateInputField
-import com.rma.expensetracker.presentation.components.DropdownComponent
-import com.rma.expensetracker.presentation.components.InputFieldState
-import com.rma.expensetracker.presentation.components.NumericalInputField
-import com.rma.expensetracker.presentation.components.NumericalInputFieldState
+import com.rma.expensetracker.presentation.components.buttons.MinimalistAddButton
+import com.rma.expensetracker.presentation.components.dialogs.CategoryPickDialog
+import com.rma.expensetracker.presentation.components.input_fields.DateInputField
+import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
+import com.rma.expensetracker.presentation.components.input_fields.NumericalInputField
+import com.rma.expensetracker.presentation.components.input_fields.NumericalInputFieldState
+import com.rma.expensetracker.presentation.components.other.CategoryTag
+import com.rma.expensetracker.presentation.components.other.DropdownComponent
 
 @Composable
 fun EditRecordInfo(
@@ -202,21 +199,14 @@ fun EditRecordInfoContent(
                     )
                 }
             } else {
-                AssistChip(
+                MinimalistAddButton(
                     onClick = { openCategoryPicker(null) },
-                    label = { Text(stringResource(R.string.add_category_to_record)) },
-                    leadingIcon = {
-                        Icon(
-                            Icons.Filled.Add,
-                            contentDescription = stringResource(R.string.add),
-                            Modifier.size(AssistChipDefaults.IconSize)
-                        )
-                    }
+                    label = { Text(stringResource(R.string.add_category_to_record)) }
                 )
             }
         }
 
-        CategoryPicker(
+        CategoryPickDialog(
             categories = categoriesList,
             isOpen = isCategoryPickerOpen,
             selectedCategoryId = selectedCategoryId,

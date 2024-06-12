@@ -23,19 +23,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.rma.expensetracker.R
 import com.rma.expensetracker.common.BottomNavBarIndicator
-import com.rma.expensetracker.presentation.components.ActionBarWithBalance
-import com.rma.expensetracker.presentation.components.GalleryIcon
-import com.rma.expensetracker.presentation.components.PagerComponent
-import com.rma.expensetracker.presentation.components.RecordCard
-import com.rma.expensetracker.presentation.components.SettingsIcon
-import com.rma.expensetracker.presentation.components.TopAppBarLayout
+import com.rma.expensetracker.presentation.components.actions_bars.ActionBarWithBalance
+import com.rma.expensetracker.presentation.components.cards.RecordCard
+import com.rma.expensetracker.presentation.components.icons.GalleryIcon
+import com.rma.expensetracker.presentation.components.icons.SettingsIcon
+import com.rma.expensetracker.presentation.components.layouts.TopAppBarLayout
+import com.rma.expensetracker.presentation.components.other.PagerComponent
 import java.util.Locale
 
 
@@ -132,10 +134,21 @@ fun RecordsScreen(
                 }
             }
 
-            // Scrollable list of cards
-            items(recordsList) { record ->
-                RecordCard(record = record) {
-                    viewModel.onRecordClicked(record.id, navController)
+            if(recordsList.isEmpty()) {
+                item {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally){
+                        Text(
+                            text = stringResource(R.string.no_records),
+                            modifier = Modifier.padding(20.dp)
+                        )
+                    }
+                }
+            } else {
+                // Scrollable list of cards
+                items(recordsList) { record ->
+                    RecordCard(record = record) {
+                        viewModel.onRecordClicked(record.id, navController)
+                    }
                 }
             }
         }

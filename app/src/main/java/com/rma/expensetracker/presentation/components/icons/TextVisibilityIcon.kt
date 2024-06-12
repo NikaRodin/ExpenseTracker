@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.icons
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

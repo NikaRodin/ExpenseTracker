@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.other
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.rma.expensetracker.data.models.mock.Account
-import com.rma.expensetracker.presentation.components.GraphComponent
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

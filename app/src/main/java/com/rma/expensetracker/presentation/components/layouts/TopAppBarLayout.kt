@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.layouts
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope

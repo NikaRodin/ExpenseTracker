@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.input_fields
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField

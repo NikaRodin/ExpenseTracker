@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.input_fields
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker

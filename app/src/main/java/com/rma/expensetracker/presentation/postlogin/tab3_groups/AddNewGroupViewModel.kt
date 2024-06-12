@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.postlogin
+package com.rma.expensetracker.presentation.postlogin.tab3_groups
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.UUID
 
-class AddNewRecordViewModel : ViewModel() {
+class AddNewGroupViewModel : ViewModel() {
     private val _accountsList = MutableStateFlow(emptyList<Account>())
     val accountsList: StateFlow<List<Account>> = _accountsList
 

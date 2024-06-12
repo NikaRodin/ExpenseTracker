@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.postlogin
+package com.rma.expensetracker.presentation.postlogin.tab3_groups
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,9 +17,9 @@ import com.rma.expensetracker.presentation.components.layouts.TopAppBarLayout
 import com.rma.expensetracker.presentation.postlogin.tab1_records.EditRecordInfoContent
 
 @Composable
-fun AddNewRecordScreen(
+fun AddNewGroupScreen(
     navController: NavHostController,
-    viewModel: AddNewRecordViewModel = viewModel()
+    viewModel: AddNewGroupViewModel = viewModel()
 ){
     val titleState by viewModel.titleState.collectAsState()
     val amountState by viewModel.amountState.collectAsState()

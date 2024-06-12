@@ -22,7 +22,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.rma.expensetracker.R
-import com.rma.expensetracker.presentation.components.TextVisibilityIcon
+import com.rma.expensetracker.presentation.components.icons.TextVisibilityIcon
 
 @Composable
 fun RegistrationForm(viewModel: WelcomeScreenViewModel) {

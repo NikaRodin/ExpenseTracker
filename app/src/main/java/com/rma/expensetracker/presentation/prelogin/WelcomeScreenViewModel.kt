@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rma.expensetracker.common.CurrentUser
 import com.rma.expensetracker.data.interactors.AuthenticationInteractor
 import com.rma.expensetracker.data.interactors.UserInteractor
-import com.rma.expensetracker.presentation.components.InputFieldState
+import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

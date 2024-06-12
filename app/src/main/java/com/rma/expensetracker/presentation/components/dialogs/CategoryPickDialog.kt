@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.dialogs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,10 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.rma.expensetracker.R
 import com.rma.expensetracker.data.models.mock.Category
+import com.rma.expensetracker.presentation.components.buttons.DismissButton
+import com.rma.expensetracker.presentation.components.other.CategoryTag
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun CategoryPicker(
+fun CategoryPickDialog(
     categories: List<Category>,
     isOpen: Boolean,
     selectedCategoryId: String?,

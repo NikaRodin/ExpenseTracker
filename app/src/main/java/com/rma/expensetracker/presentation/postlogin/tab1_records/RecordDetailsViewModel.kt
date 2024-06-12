@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.rma.expensetracker.common.BottomNavBarIndicator
 import com.rma.expensetracker.common.CurrentUser
-import com.rma.expensetracker.common.SelectedRecordId
+import com.rma.expensetracker.common.SelectedRecord
 import com.rma.expensetracker.common.ToastState
 import com.rma.expensetracker.data.interactors.AccountInteractor
 import com.rma.expensetracker.data.interactors.CategoryInteractor
@@ -13,8 +13,8 @@ import com.rma.expensetracker.data.models.mock.Account
 import com.rma.expensetracker.data.models.mock.Category
 import com.rma.expensetracker.data.models.mock.RecordMock
 import com.rma.expensetracker.data.models.useful.Record
-import com.rma.expensetracker.presentation.components.InputFieldState
-import com.rma.expensetracker.presentation.components.NumericalInputFieldState
+import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
+import com.rma.expensetracker.presentation.components.input_fields.NumericalInputFieldState
 import com.rma.expensetracker.presentation.navigation.directions.PostLoginDestinations
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +26,7 @@ import java.util.Locale
 import kotlin.math.absoluteValue
 
 class RecordDetailsViewModel : ViewModel() {
-    private val recordId: StateFlow<String?> = SelectedRecordId.selectedRecordId
+    private val recordId: StateFlow<String?> = SelectedRecord.selectedRecordId
 
     private val _currentRecord = MutableStateFlow<Record?>(null)
     val currentRecord: StateFlow<Record?> = _currentRecord

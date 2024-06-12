@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.rma.expensetracker.R
-import com.rma.expensetracker.presentation.components.BackButton
-import com.rma.expensetracker.presentation.components.TopAppBarLayout
+import com.rma.expensetracker.presentation.components.buttons.BackButton
+import com.rma.expensetracker.presentation.components.layouts.TopAppBarLayout
 
 @Composable
 fun SettingsScreen(
@@ -25,7 +25,9 @@ fun SettingsScreen(
 ) {
     TopAppBarLayout(
         screenTitle = stringResource(R.string.settings),
-        navigationIcons = { BackButton(navController = navController)},
+        navigationIcons = {
+            BackButton(navController = navController, showBottomNavBar = true)
+        },
         actions = {}
     ) { innerPadding ->
 

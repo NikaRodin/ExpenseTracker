@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.buttons
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Edit

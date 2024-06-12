@@ -90,4 +90,24 @@
     <string name="delete">Izbriši</string>
     <string name="are_you_sure_you_want_to_delete">Jeste li sigurni da želite izbrisati ovu stavku?</string>
     <string name="cancel">Odustani</string>
+    <string name="my_groups">Moje grupe</string>
+    <string name="add_group_account">Dodaj grupni račun</string>
+    <string name="notifications_icon_description">Notifications</string>
+    <string name="arrow_forward_description">Arrow forward</string>
+    <string name="person_count">Broj osoba</string>
+    <string name="no_group_accounts">Nema grupnih računa.</string>
+    <string name="no_records">Nema stavki.</string>
+    <string name="group_preview">Pregled grupe </string>
+    <string name="group_edit">Uređivanje grupe</string>
+    <string name="group_not_selected">Grupni račun nije odabran.</string>
+    <string name="are_you_sure_you_want_to_leave">Jeste li sigurni da želite izaći iz ove grupe?</string>
+    <string name="people">Osobe</string>
+    <string name="profile_picture">Profilna slika</string>
+    <string name="send_reminder">Pošalji podsjetnik</string>
+    <string name="leave_group">Izađi iz grupe</string>
+    <string name="edit_group_acc_title_field_label">Naziv</string>
+    <string name="edit_group_acc_title_placeholder">Upiši naziv...</string>
+    <string name="confirm">Potvrdi</string>
+    <string name="add_person">Dodaj osobu</string>
+    <string name="are_you_sure_you_want_to_remove_user">Ukloniti korisnika iz grupe?</string>
 </resources>

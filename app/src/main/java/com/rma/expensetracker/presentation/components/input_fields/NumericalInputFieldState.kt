@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.input_fields
 
 data class NumericalInputFieldState(
     val value: String,

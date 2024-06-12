@@ -17,12 +17,21 @@ object CurrentUser {
     }
 }
 
-object SelectedRecordId {
+object SelectedRecord {
     private val _selectedRecordId = MutableStateFlow<String?>(null)
     val selectedRecordId: StateFlow<String?> = _selectedRecordId
 
     fun updateSelectedRecordId(recordId: String?) {
         _selectedRecordId.value = recordId
+    }
+}
+
+object SelectedGroupAccount {
+    private val _selectedGroupAccountId = MutableStateFlow<String?>(null)
+    val selectedGroupAccountId: StateFlow<String?> = _selectedGroupAccountId
+
+    fun updateSelectedGroupAccountId(accountId: String?) {
+        _selectedGroupAccountId.value = accountId
     }
 }
 

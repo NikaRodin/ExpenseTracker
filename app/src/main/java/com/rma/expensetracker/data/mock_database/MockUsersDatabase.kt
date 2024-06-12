@@ -30,4 +30,8 @@ object MockUsersDatabase {
     fun getUserById(userId: String): User {
         return usersList.first {it.id == userId}
     }
+
+    fun getAllUsers(): List<User> {
+        return usersList
+    }
 }

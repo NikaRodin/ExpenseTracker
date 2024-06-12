@@ -1,4 +1,4 @@
-package com.rma.expensetracker.presentation.components
+package com.rma.expensetracker.presentation.components.cards
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rma.expensetracker.R
 import com.rma.expensetracker.data.models.useful.Record
+import com.rma.expensetracker.presentation.components.other.CategoryTag
 import java.util.Locale
 
 @Composable
@@ -80,7 +81,7 @@ fun RecordCard(
                     horizontalArrangement = Arrangement.End,
                     modifier = Modifier.fillMaxWidth().padding(2.dp)
                 ){
-                    //TODO Provjeri treba li staviti ikonu (je li user isti kao trenutni)
+                    //TODO Provjeri je li user isti kao trenutni
                     Text(
                         text = "${record.user.firstName} ${record.user.lastName}",
                         style = MaterialTheme.typography.labelSmall
@@ -88,7 +89,7 @@ fun RecordCard(
                     Spacer(modifier = Modifier.padding(horizontal = 2.dp))
                     Icon(
                         imageVector = Icons.Outlined.AccountCircle,
-                        contentDescription = "" //TODO dohvati ime usera
+                        contentDescription =  stringResource(R.string.profile_picture)
                     )
                 }
 

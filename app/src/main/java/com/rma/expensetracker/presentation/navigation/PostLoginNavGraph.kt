@@ -11,6 +11,8 @@ import com.rma.expensetracker.presentation.postlogin.settings.SettingsScreen
 import com.rma.expensetracker.presentation.postlogin.tab1_records.RecordDetailsScreen
 import com.rma.expensetracker.presentation.postlogin.tab1_records.RecordsScreen
 import com.rma.expensetracker.presentation.postlogin.tab2_savings.SavingsScreen
+import com.rma.expensetracker.presentation.postlogin.tab3_groups.AddNewGroupScreen
+import com.rma.expensetracker.presentation.postlogin.tab3_groups.GroupDetailsScreen
 import com.rma.expensetracker.presentation.postlogin.tab3_groups.GroupsScreen
 import com.rma.expensetracker.presentation.postlogin.tab4_budget.BudgetScreen
 
@@ -50,7 +52,20 @@ fun NavGraphBuilder.postLoginNavGraph(
             route = PostLoginDestinations.GroupsScreen.destination,
             arguments = PostLoginDestinations.GroupsScreen.arguments
         ) {
-            GroupsScreen()
+            GroupsScreen(navController)
+        }
+        composable(
+            route = PostLoginDestinations.GroupDetailsScreen.destination,
+            arguments = PostLoginDestinations.GroupDetailsScreen.arguments
+        ) {
+            GroupDetailsScreen(navController)
+        }
+
+        composable(
+            route = PostLoginDestinations.AddNewGroupScreen.destination,
+            arguments = PostLoginDestinations.AddNewGroupScreen.arguments
+        ) {
+            AddNewGroupScreen(navController)
         }
         composable(
             route = PostLoginDestinations.BudgetScreen.destination,
