@@ -41,6 +41,12 @@ object MockGroupDatabase {
         userIds.forEach { userId -> userAccConnections.add(UserAccConnection(userId, accId)) }
     }
 
+    fun removeUserAccountConnections(userIds: List<String>, accId: String) {
+        userIds.forEach { userId ->
+            userAccConnections.removeIf { it.userId == userId && it.accountId == accId }
+        }
+    }
+
     fun getAccountsByUserId(userId: String): List<Account> {
         val filteredConnections = userAccConnections.filter { it.userId == userId }
         val accountsList = mutableListOf<Account>()

@@ -110,4 +110,10 @@
     <string name="confirm">Potvrdi</string>
     <string name="add_person">Dodaj osobu</string>
     <string name="are_you_sure_you_want_to_remove_user">Ukloniti korisnika iz grupe?</string>
+    <string name="add_new_group_account">Kreiraj grupni račun</string>
+    <string name="edit_initial_balance_field_label">Početni saldo</string>
+    <string name="search_people">Pretraži osobe</string>
+    <string name="search_people_placeholder">npr. Ana Anić</string>
+    <string name="add_person_dialog_title">Dodavanje osoba</string>
+    <string name="search_people_icon_description">Search users icon</string>
 </resources>

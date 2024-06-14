@@ -37,7 +37,7 @@ fun AddNewRecordScreen(
 
     TopAppBarLayout(
         screenTitle = stringResource(R.string.add_new_record),
-        navigationIcons = { DismissButton { viewModel.onDismissClicked(navController) } },
+        navigationIcons = { DismissButton({ viewModel.onDismissClicked(navController) }) },
         actions = { SaveButton { viewModel.onSaveClicked(navController) } }
     ) { innerPadding ->
         Column(

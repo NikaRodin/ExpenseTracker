@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.rma.expensetracker.R
 import com.rma.expensetracker.presentation.components.buttons.DismissButton
 import com.rma.expensetracker.presentation.components.buttons.MinimalistAddButton
+import com.rma.expensetracker.presentation.components.dialogs.AddPersonDialog
 import com.rma.expensetracker.presentation.components.dialogs.PopUpDialog
 import com.rma.expensetracker.presentation.postlogin.tab1_records.DataText
 import com.rma.expensetracker.presentation.postlogin.tab1_records.SimpleDataRow
@@ -30,9 +31,9 @@ fun EditGroupInfo(
     viewModel: GroupDetailsViewModel
 ) {
     val titleState by viewModel.titleState.collectAsState()
+    val searchQueryState by viewModel.searchQueryState.collectAsState()
     val usersOnEditScreen by viewModel.usersOnEditScreen.collectAsState()
     val selectedUsersList by viewModel.selectedUsersList.collectAsState()
-    val allUsersList by viewModel.allUsersList.collectAsState()
     val isAddUserDialogOpen by viewModel.isAddUserDialogOpen.collectAsState()
     val isRemovePersonDialogOpen by viewModel.isRemovePersonDialogOpen.collectAsState()
 
@@ -74,19 +75,29 @@ fun EditGroupInfo(
                 onClick = viewModel::onAddPersonClicked
             )
         }
-        /*TODO add person pop up dialog */
+
+        AddPersonDialog(
+            isOpen = isAddUserDialogOpen,
+            onDismissRequest = viewModel::onAddPersonDismissed,
+            onSave = viewModel::onAddPersonSaved,
+            selectedUsers = selectedUsersList,
+            searchQueryState = searchQueryState,
+            onUserSelected = viewModel::onUserSelected,
+            onUserDeselected = viewModel::onUserDeselected,
+            getFilteredUsers = viewModel::getFilteredUsers
+        )
 
         LazyColumn {
             items(usersOnEditScreen) { user ->
                 PersonRow(user) {
-                    DismissButton {
+                    DismissButton({
                         if (usersOnEditScreen.size > 1)
                             viewModel.onRemovePersonClicked(user.id)
                         else
                             viewModel.showWarningToast(
                                 "Nemoguće izbrisati korisnika. U grupi mora ostati barem jedna osoba."
                             )
-                    }
+                    })
                 }
             }
         }

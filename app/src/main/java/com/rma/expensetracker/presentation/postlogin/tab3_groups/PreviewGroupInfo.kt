@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.rma.expensetracker.R
@@ -156,7 +157,10 @@ fun PersonRow(
                 contentDescription = stringResource(R.string.profile_picture)
             )
             Spacer(modifier = Modifier.padding(horizontal = 2.dp))
-            Text(" ${user.firstName} ${user.lastName}")
+            Text(
+                text = " ${user.firstName} ${user.lastName}",
+                overflow = TextOverflow.Ellipsis
+            )
         }
 
         Row(

@@ -46,7 +46,7 @@ fun PopUpDialog(
                         horizontalArrangement = Arrangement.End,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        DismissButton { onDismiss() }
+                        DismissButton(onDismiss)
                     }
 
                     Row(

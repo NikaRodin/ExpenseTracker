@@ -1,10 +1,7 @@
 package com.rma.expensetracker.presentation.components.dialogs
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,19 +16,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.rma.expensetracker.R
-import com.rma.expensetracker.data.models.mock.Category
+import com.rma.expensetracker.data.models.mock.User
 import com.rma.expensetracker.presentation.components.buttons.DismissButton
-import com.rma.expensetracker.presentation.components.other.CategoryTag
+import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
+import com.rma.expensetracker.presentation.components.other.PersonPicker
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun CategoryPickDialog(
-    categories: List<Category>,
+fun AddPersonDialog(
     isOpen: Boolean,
-    selectedCategoryId: String?,
-    onCategorySelected: (String) -> Unit,
     onDismissRequest: () -> Unit,
-    onSave: () -> Unit
+    onSave: () -> Unit,
+    selectedUsers: List<User>,
+    searchQueryState: InputFieldState,
+    onUserSelected: (User) -> Unit,
+    onUserDeselected: (User) -> Unit,
+    getFilteredUsers: () -> List<User>
 ) {
     if (isOpen) {
         Dialog(onDismissRequest = onDismissRequest) {
@@ -47,35 +46,26 @@ fun CategoryPickDialog(
                 ) {
                     // Dismiss button
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(bottom = 25.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 25.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = stringResource(R.string.pick_category),
+                            text = stringResource(R.string.add_person_dialog_title),
                             style = MaterialTheme.typography.titleLarge
                         )
                         DismissButton(onDismissRequest)
                     }
 
-                    // FlowRow of chips
-                    FlowRow(
-                        horizontalArrangement  = Arrangement.SpaceEvenly,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                    ) {
-                        categories.forEach { category ->
-                            Box(modifier = Modifier.padding(6.dp)) {
-                                CategoryTag(
-                                    category = category,
-                                    textStyle = MaterialTheme.typography.labelMedium,
-                                    isSelected = category.id == selectedCategoryId,
-                                    onClick = onCategorySelected
-                                )
-                            }
-                        }
-                    }
+                    PersonPicker(
+                        selectedUsers = selectedUsers,
+                        searchQueryState = searchQueryState,
+                        onUserSelected = onUserSelected,
+                        onUserDeselected = onUserDeselected,
+                        getFilteredUsers = getFilteredUsers
+                    )
 
                     // Save button
                     Button(

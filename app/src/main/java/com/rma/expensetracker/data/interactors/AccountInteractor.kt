@@ -18,6 +18,14 @@ object AccountInteractor {
         MockAccountsDatabase.addAccount(userIds, account)
     }
 
+    fun addUsersToAccount(userIds: List<String>, accId: String) {
+        MockGroupDatabase.addUserAccountConnections(userIds, accId)
+    }
+
+    fun removeUsersFromAccount(userIds: List<String>, accId: String) {
+        MockGroupDatabase.removeUserAccountConnections(userIds, accId)
+    }
+
     fun updateBalance(accId: String) {
         val records = RecordInteractor.getRecordsByAccountId(accId)
         var updatedBalance = 0.00
@@ -25,5 +33,9 @@ object AccountInteractor {
             updatedBalance += it.amount
         }
         MockAccountsDatabase.setBalance(accId, updatedBalance)
+    }
+
+    fun updateAccount(accId: String, newAccount: Account) {
+        MockAccountsDatabase.updateAccount(accId, newAccount)
     }
 }

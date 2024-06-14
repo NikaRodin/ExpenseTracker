@@ -28,12 +28,11 @@ class GroupDetailsViewModel : ViewModel() {
     val groupUsersList: StateFlow<List<User>> = _groupUsersList
 
     private val _allUsersList = MutableStateFlow(emptyList<User>())
-    val allUsersList: StateFlow<List<User>> = _allUsersList
 
-    private val _selectedUsersList = MutableStateFlow(emptyList<User>())   //User ili nešto drugo?
+    private val _selectedUsersList = MutableStateFlow(emptyList<User>())
     val selectedUsersList: StateFlow<List<User>> = _selectedUsersList
 
-    private val _usersOnEditScreen = MutableStateFlow(emptyList<User>())   //User ili nešto drugo?
+    private val _usersOnEditScreen = MutableStateFlow(emptyList<User>())
     val usersOnEditScreen: StateFlow<List<User>> = _usersOnEditScreen
 
     private val _isEditModeOn = MutableStateFlow(false)
@@ -49,7 +48,6 @@ class GroupDetailsViewModel : ViewModel() {
     val isRemovePersonDialogOpen: StateFlow<Boolean> = _isRemovePersonDialogOpen
 
     private val _removedPersonId = MutableStateFlow<String?>(null)
-    val removedPersonId: StateFlow<String?> = _removedPersonId
 
     private val _titleState = MutableStateFlow(
         InputFieldState(
@@ -58,7 +56,15 @@ class GroupDetailsViewModel : ViewModel() {
         )
     )
 
+    private val _searchQueryState = MutableStateFlow(
+        InputFieldState(
+            text = "",
+            onTextChange = this::onSearchQueryChange
+        )
+    )
+
     val titleState: StateFlow<InputFieldState> = _titleState
+    val searchQueryState: StateFlow<InputFieldState> = _searchQueryState
 
     init {
         //showLoading()
@@ -86,12 +92,53 @@ class GroupDetailsViewModel : ViewModel() {
         _allUsersList.value = UserInteractor.getAllUsers()
     }
 
+    private fun onTitleTextChange(newValue: String) {
+        _titleState.update { it.copy(text = newValue) }
+    }
+
+    private fun onSearchQueryChange(newValue: String) {
+        _searchQueryState.update { it.copy(text = newValue) }
+    }
+
     fun onEditClicked() { _isEditModeOn.value = true }
 
     fun onDismissClicked() { _isEditModeOn.value = false }
 
     fun onSaveClicked() {
-        // resetiraj preview screen
+        if(_currentGroupAccount.value != null) {
+            if(titleState.value.text.isBlank()) {
+                ToastState.triggerToast("Naziv ne smije biti prazan!")
+                return
+            }
+
+            AccountInteractor.updateAccount(
+                accId = _currentGroupAccount.value!!.id,
+                newAccount = _currentGroupAccount.value!!.copy(title = titleState.value.text)
+            )
+
+            val usersToBeRemoved: MutableList<User> = mutableListOf()
+            usersToBeRemoved.addAll(_groupUsersList.value)
+            usersToBeRemoved.removeAll(_usersOnEditScreen.value)
+
+            AccountInteractor.removeUsersFromAccount(
+                usersToBeRemoved.map { user -> user.id },
+                _currentGroupAccount.value!!.id
+            )
+
+            val usersToBeAdded: MutableList<User> = mutableListOf()
+            usersToBeAdded.addAll(_usersOnEditScreen.value)
+            usersToBeAdded.removeAll(_groupUsersList.value)
+
+            AccountInteractor.addUsersToAccount(
+                usersToBeAdded.map { user -> user.id },
+                _currentGroupAccount.value!!.id
+            )
+
+            resetPreviewScreen()
+            onDismissClicked()
+        } else {
+            ToastState.triggerToast("Greška")
+        }
     }
 
     fun onLeaveGroupClicked() {
@@ -104,31 +151,20 @@ class GroupDetailsViewModel : ViewModel() {
 
     fun onLeaveGroupConfirmed(navController: NavController) {
         onLeaveGroupDismissed()
-        groupAccountId.value?.let {
-            //Remove user from group account -> provjeri ima li ih dovoljno?
+
+        if(groupAccountId.value != null && _currentUser.value != null){
+            AccountInteractor.removeUsersFromAccount(
+                listOf(_currentUser.value!!.id),
+                groupAccountId.value!!
+            )
             ToastState.triggerToast("Napustili ste grupu.")
             navController.navigate(PostLoginDestinations.GroupsScreen.destination) {
                 popUpTo(0)
                 launchSingleTop = true
             }
+        } else {
+            ToastState.triggerToast("Greška")
         }
-    }
-
-    private fun onTitleTextChange(newValue: String) {
-        _titleState.update { it.copy(text = newValue) }
-    }
-
-    fun onAddPersonClicked() {
-        _isAddUserDialogOpen.value = true
-    }
-
-    fun onAddPersonDismissed() {
-        _isAddUserDialogOpen.value = false
-    }
-
-    fun onAddPersonSaved() {
-        onAddPersonDismissed()
-        /*TODO*/
     }
 
     fun onRemovePersonClicked(userId: String) {
@@ -150,5 +186,49 @@ class GroupDetailsViewModel : ViewModel() {
 
     fun showWarningToast(message: String) {
         ToastState.triggerToast(message)
+    }
+
+    /////////////////////////////////////////
+    fun onAddPersonClicked() {
+        _isAddUserDialogOpen.value = true
+    }
+
+    fun onAddPersonDismissed() {
+        _isAddUserDialogOpen.value = false
+    }
+
+    fun onAddPersonSaved() {
+        val updatedEditScreenUsers: MutableSet<User> = mutableSetOf()
+        updatedEditScreenUsers.addAll(_usersOnEditScreen.value)
+        updatedEditScreenUsers.addAll(_selectedUsersList.value)
+
+        _usersOnEditScreen.value = updatedEditScreenUsers.toList()
+        onAddPersonDismissed()
+    }
+
+    fun onUserSelected(user: User) {
+        if (!_selectedUsersList.value.contains(user)) {
+            _selectedUsersList.value += user
+        }
+    }
+
+    fun onUserDeselected(user: User) {
+        _selectedUsersList.value = _selectedUsersList.value.filter {
+            it.id != user.id
+        }
+    }
+
+    fun getFilteredUsers(): List<User> {
+        val query = _searchQueryState.value.text.lowercase()
+        return if (query.isBlank()) {
+            emptyList()
+        } else {
+            _allUsersList.value.filter {
+                it.firstName.lowercase().contains(query)
+                        || it.lastName.lowercase().contains(query)
+                        || it.email.lowercase().contains(query)
+                        || it.userName?.lowercase()?.contains(query) ?: false
+            }
+        }
     }
 }

@@ -45,6 +45,16 @@ object MockAccountsDatabase {
         MockGroupDatabase.addUserAccountConnections(userIds, account.id)
     }
 
+    fun updateAccount(accId: String, newAccount: Account) {
+        val account = getAccountById(accId)
+        val updatedAccount = account.copy(
+            title = newAccount.title,
+            balance = newAccount.balance,
+            isGroupAccount = newAccount.isGroupAccount
+        )
+        accountsList[accountsList.indexOf(account)] = updatedAccount
+    }
+
     fun setBalance(accId: String, balance: Double) {
         accountsList.find { it.id == accId }?.balance = balance
     }

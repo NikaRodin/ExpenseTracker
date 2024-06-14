@@ -36,6 +36,7 @@ fun GroupsScreen(
 
     LaunchedEffect(true) {
         BottomNavBarIndicator.showBottomNavBar()
+        viewModel.resetGroupsScreen()
     }
 
     TopAppBarLayout(
@@ -53,7 +54,7 @@ fun GroupsScreen(
             AddItemActionBar(
                 addButtonLabel = { Text(stringResource(R.string.add_group_account)) },
                 trailingIcons = { NotificationBellIcon(navController) },
-                onAddClick = {/*TODO*/}
+                onAddClick = { viewModel.onAddClicked(navController)}
             )
 
             if(groupAccountList.isEmpty()) {

@@ -10,4 +10,12 @@ object CategoryInteractor {
     fun getCategoriesByUserId(userId: String): List<Category> {
         return MockCategoryDatabase.getCategoriesByUserId(userId)
     }
+
+    fun addCategory(newCategory: Category) {
+        MockCategoryDatabase.addCategory(newCategory)
+    }
+
+    fun findCategory(userId: String, title: String): Category? {
+        return getCategoriesByUserId(userId).find { it.title == title }
+    }
 }

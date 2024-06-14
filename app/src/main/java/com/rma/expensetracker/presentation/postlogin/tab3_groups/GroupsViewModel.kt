@@ -19,6 +19,10 @@ class GroupsViewModel : ViewModel() {
 
     init {
         //showLoading()
+        resetGroupsScreen()
+    }
+
+    fun resetGroupsScreen() {
         getAllCurrentUserGroupAccounts()
     }
 

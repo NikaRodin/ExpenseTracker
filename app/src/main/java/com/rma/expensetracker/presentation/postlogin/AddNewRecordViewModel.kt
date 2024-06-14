@@ -11,6 +11,7 @@ import com.rma.expensetracker.data.interactors.RecordInteractor
 import com.rma.expensetracker.data.models.mock.Account
 import com.rma.expensetracker.data.models.mock.Category
 import com.rma.expensetracker.data.models.mock.RecordMock
+import com.rma.expensetracker.data.models.mock.User
 import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
 import com.rma.expensetracker.presentation.components.input_fields.NumericalInputFieldState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,8 @@ import java.time.format.DateTimeParseException
 import java.util.UUID
 
 class AddNewRecordViewModel : ViewModel() {
+    private val _currentUser: StateFlow<User?> = CurrentUser.currentUser
+
     private val _accountsList = MutableStateFlow(emptyList<Account>())
     val accountsList: StateFlow<List<Account>> = _accountsList
 
@@ -90,12 +93,12 @@ class AddNewRecordViewModel : ViewModel() {
     }
 
     private fun resetScreen() {
-        val accounts = CurrentUser.currentUser.value?.let {
+        val accounts = _currentUser.value?.let {
             AccountInteractor.getAccountsByUserId(it.id)
         }
         _accountsList.value = accounts?: emptyList()
 
-        val categories = CurrentUser.currentUser.value?.let {
+        val categories = _currentUser.value?.let {
             CategoryInteractor.getCategoriesByUserId(it.id)
         }
         _categoriesList.value = categories?: emptyList()
@@ -112,7 +115,7 @@ class AddNewRecordViewModel : ViewModel() {
     }
 
     fun onSaveClicked(navController: NavController) {
-        if(CurrentUser.currentUser.value != null) {
+        if(_currentUser.value != null) {
             if(titleState.value.text.isBlank()) {
                 ToastState.triggerToast("Naziv ne smije biti prazan!")
                 return
@@ -145,7 +148,7 @@ class AddNewRecordViewModel : ViewModel() {
                 isGroupRecord = false,
                 notes = notesState.value.text,
                 photos = emptyList(),
-                userId = CurrentUser.currentUser.value!!.id,
+                userId = _currentUser.value!!.id,
                 accountId = accountsList.value[selectedAccount.value].id,
                 categoryId = category.value!!.id
             )

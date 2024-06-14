@@ -97,4 +97,8 @@ object MockCategoryDatabase {
     fun getCategoriesByUserId(userId: String): List<Category> {
         return categoriesList.filter { it.userId == userId}
     }
+
+    fun addCategory(category: Category) {
+        categoriesList.add(category)
+    }
 }
