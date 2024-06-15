@@ -147,6 +147,10 @@ object MockRecordsDatabase {
         return recordsList.filter { it.accountId == accId }
     }
 
+    fun getRecordsByUserId(userId: String): List<RecordMock> {
+        return recordsList.filter { it.userId == userId }
+    }
+
     fun addRecord(record: RecordMock) {
         recordsList.add(record)
     }

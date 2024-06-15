@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -79,10 +80,10 @@ fun PersonPicker(
                     color = MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(10)
                 )
+                .clip(RoundedCornerShape(10))
                 .background(MaterialTheme.colorScheme.surfaceVariant)
                 .fillMaxWidth()
                 .wrapContentHeight()
-                //.height(200.dp)
         ) {
             items(filteredUsers) { user ->
                 Row(

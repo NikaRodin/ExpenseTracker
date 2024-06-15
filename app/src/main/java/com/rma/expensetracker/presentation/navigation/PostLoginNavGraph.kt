@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.rma.expensetracker.presentation.navigation.directions.PostLoginDestinations
 import com.rma.expensetracker.presentation.postlogin.AddNewRecordScreen
 import com.rma.expensetracker.presentation.postlogin.gallery.GalleryScreen
+import com.rma.expensetracker.presentation.postlogin.settings.CategoriesScreen
 import com.rma.expensetracker.presentation.postlogin.settings.SettingsScreen
 import com.rma.expensetracker.presentation.postlogin.tab1_records.RecordDetailsScreen
 import com.rma.expensetracker.presentation.postlogin.tab1_records.RecordsScreen
@@ -84,6 +85,13 @@ fun NavGraphBuilder.postLoginNavGraph(
             arguments = PostLoginDestinations.SettingsScreen.arguments
         ) {
             SettingsScreen(navController)
+        }
+
+        composable(
+            route = PostLoginDestinations.CategoriesScreen.destination,
+            arguments = PostLoginDestinations.CategoriesScreen.arguments
+        ) {
+            CategoriesScreen(navController)
         }
     }
 }

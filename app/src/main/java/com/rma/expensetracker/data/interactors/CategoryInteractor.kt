@@ -15,7 +15,11 @@ object CategoryInteractor {
         MockCategoryDatabase.addCategory(newCategory)
     }
 
+    fun deleteCategory(categoryId: String) {
+        return MockCategoryDatabase.deleteCategory(categoryId)
+    }
+
     fun findCategory(userId: String, title: String): Category? {
-        return getCategoriesByUserId(userId).find { it.title == title }
+        return getCategoriesByUserId(userId).find { it.title.lowercase() == title.lowercase()}
     }
 }

@@ -101,4 +101,8 @@ object MockCategoryDatabase {
     fun addCategory(category: Category) {
         categoriesList.add(category)
     }
+
+    fun deleteCategory(categoryId: String) {
+        categoriesList.removeIf { it.id == categoryId }
+    }
 }

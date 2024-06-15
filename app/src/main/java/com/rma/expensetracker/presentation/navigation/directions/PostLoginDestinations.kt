@@ -81,6 +81,13 @@ object PostLoginDestinations {
             get() = "settings-screen"
     }
 
+    val CategoriesScreen = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument>
+            get() = emptyList()
+        override val destination: String
+            get() = "categories-screen"
+    }
+
     // Example of a route with arguments
 //    object User {
 //        const val KEY_USER_ID = "userId"

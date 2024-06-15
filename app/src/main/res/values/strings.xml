@@ -116,4 +116,11 @@
     <string name="search_people_placeholder">npr. Ana Anić</string>
     <string name="add_person_dialog_title">Dodavanje osoba</string>
     <string name="search_people_icon_description">Search users icon</string>
+    <string name="add_category">Dodaj novu kategoriju</string>
+    <string name="categories_icon_label">Categories</string>
+    <string name="my_categories">Moje kategorije</string>
+    <string name="are_you_sure_you_want_to_delete_category">Jeste li sigurni da želite izbrisati ovu
+        kategoriju?</string>
+    <string name="add_category_dialog_title">Dodavanje kategorije</string>
+    <string name="add_button">Dodaj</string>
 </resources>

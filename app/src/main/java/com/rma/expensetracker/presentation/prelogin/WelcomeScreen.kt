@@ -33,8 +33,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rma.expensetracker.R
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.rma.expensetracker.R
+
 @Composable
 fun WelcomeScreen(viewModel: WelcomeScreenViewModel = viewModel()) {
 
@@ -50,30 +51,32 @@ fun WelcomeScreen(viewModel: WelcomeScreenViewModel = viewModel()) {
             .fillMaxSize()
             .padding(top = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = if(isLoginFormDisplayed) Arrangement.Top else Arrangement.Center
     ) {
-        Column(
-            modifier = Modifier
-                .height(screenHeight / 4)
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.image),
-                contentDescription = stringResource(id = R.string.logo_content_description),
-                contentScale = ContentScale.Crop,
+        if(isLoginFormDisplayed) {
+            Column(
                 modifier = Modifier
-                    .size(100.dp)
-                    .clip(RoundedCornerShape(percent = 50)) //50 je krug, ili koristi CircleShape
-                    .border(2.dp, Color.Gray, RoundedCornerShape(percent = 50))
-            )
+                    .height(screenHeight / 4)
+                    .padding(10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.image),
+                    contentDescription = stringResource(id = R.string.logo_content_description),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(RoundedCornerShape(percent = 50)) //50 je krug, ili koristi CircleShape
+                        .border(2.dp, Color.Gray, RoundedCornerShape(percent = 50))
+                )
 
-            Text(
-                text = stringResource(R.string.welcome),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+                Text(
+                    text = stringResource(R.string.welcome),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
 
         ElevatedCard(

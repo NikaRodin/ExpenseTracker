@@ -19,6 +19,12 @@ object RecordInteractor {
         )
     }
 
+    fun getRecordsByUserId(userId: String): List<Record> {
+        return mapRecordMockListToRecordList(
+            MockRecordsDatabase.getRecordsByUserId(userId)
+        )
+    }
+
     fun addRecord(record: RecordMock) {
         MockRecordsDatabase.addRecord(record)
         AccountInteractor.updateBalance(record.accountId)
