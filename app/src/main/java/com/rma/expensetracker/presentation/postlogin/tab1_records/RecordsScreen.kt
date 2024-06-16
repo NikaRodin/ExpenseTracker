@@ -84,8 +84,15 @@ fun RecordsScreen(
                 if(accountsList.isEmpty()) {
                     Text("Nema računa")
                 } else {
-                    PagerComponent(pagerState, accountsList) {
-                        /*TODO*/
+                    PagerComponent(
+                        pagerState,
+                        accountsList,
+                        recordsList
+                    ) {
+                        viewModel.onAnalysisClicked(
+                            accountsList[currentAccountIndex.intValue].id,
+                            navController
+                        )
                     }
                 }
             }

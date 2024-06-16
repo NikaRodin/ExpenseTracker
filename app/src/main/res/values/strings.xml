@@ -123,4 +123,11 @@
         kategoriju?</string>
     <string name="add_category_dialog_title">Dodavanje kategorije</string>
     <string name="add_button">Dodaj</string>
+    <string name="analysis">Analiza</string>
+    <string name="all_expenses">Ukupni troškovi</string>
+    <string name="all_incomes">Ukupni prihodi</string>
+    <string name="expenses_by_person">Troškovi po osobi</string>
+    <string name="incomes_by_person">Prihodi po osobi</string>
+    <string name="expenses">Troškovi</string>
+    <string name="incomes">Prihodi</string>
 </resources>

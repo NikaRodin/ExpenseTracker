@@ -3,6 +3,7 @@ package com.rma.expensetracker.presentation.postlogin.tab1_records
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.rma.expensetracker.common.CurrentUser
+import com.rma.expensetracker.common.SelectedAccount
 import com.rma.expensetracker.common.SelectedRecord
 import com.rma.expensetracker.data.interactors.AccountInteractor
 import com.rma.expensetracker.data.interactors.RecordInteractor
@@ -34,13 +35,22 @@ class RecordsViewModel : ViewModel() {
 
     fun updateRecordsList(accId: String) {
         val records = RecordInteractor.getRecordsByAccountId(accId)
-        _recordsList.value = records
+        _recordsList.value = records.sortedWith( compareByDescending { it.date })
     }
 
     fun onRecordClicked(recordId: String, navController:NavHostController) {
         SelectedRecord.updateSelectedRecordId(recordId)
         navController.navigate(
             PostLoginDestinations.RecordDetailsScreen.destination
+        ){
+            launchSingleTop = true
+        }
+    }
+
+    fun onAnalysisClicked(accId: String, navController:NavHostController) {
+        SelectedAccount.updateSelectedAccountId(accId)
+        navController.navigate(
+            PostLoginDestinations.AnalysisScreen.destination
         ){
             launchSingleTop = true
         }

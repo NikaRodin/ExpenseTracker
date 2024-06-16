@@ -35,6 +35,15 @@ object SelectedGroupAccount {
     }
 }
 
+object SelectedAccount {
+    private val _selectedAccountId = MutableStateFlow<String?>(null)
+    val selectedAccountId: StateFlow<String?> = _selectedAccountId
+
+    fun updateSelectedAccountId(accountId: String?) {
+        _selectedAccountId.value = accountId
+    }
+}
+
 object BottomNavBarIndicator {
     private val _isBottomNavBarVisible = MutableStateFlow(false)
     val isBottomNavBarVisible: StateFlow<Boolean> = _isBottomNavBarVisible

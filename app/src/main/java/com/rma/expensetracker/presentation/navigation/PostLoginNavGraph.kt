@@ -9,6 +9,7 @@ import com.rma.expensetracker.presentation.postlogin.AddNewRecordScreen
 import com.rma.expensetracker.presentation.postlogin.gallery.GalleryScreen
 import com.rma.expensetracker.presentation.postlogin.settings.CategoriesScreen
 import com.rma.expensetracker.presentation.postlogin.settings.SettingsScreen
+import com.rma.expensetracker.presentation.postlogin.tab1_records.AnalysisScreen
 import com.rma.expensetracker.presentation.postlogin.tab1_records.RecordDetailsScreen
 import com.rma.expensetracker.presentation.postlogin.tab1_records.RecordsScreen
 import com.rma.expensetracker.presentation.postlogin.tab2_savings.SavingsScreen
@@ -36,6 +37,12 @@ fun NavGraphBuilder.postLoginNavGraph(
             arguments = PostLoginDestinations.RecordDetailsScreen.arguments
         ) {
             RecordDetailsScreen(navController)
+        }
+        composable(
+            route = PostLoginDestinations.AnalysisScreen.destination,
+            arguments = PostLoginDestinations.AnalysisScreen.arguments
+        ) {
+            AnalysisScreen(navController)
         }
         composable(
             route = PostLoginDestinations.SavingsScreen.destination,

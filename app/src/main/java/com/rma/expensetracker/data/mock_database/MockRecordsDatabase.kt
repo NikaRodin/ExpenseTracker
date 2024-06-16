@@ -21,7 +21,7 @@ object MockRecordsDatabase {
             id = "anneOsobniRec2",
             title = "Plaća",
             amount = 1000.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(2),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "anneOsobniId",
@@ -31,13 +31,82 @@ object MockRecordsDatabase {
             id = "anneOsobniRec3",
             title = "Izlazak",
             amount = -500.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(4),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "anneOsobniId",
             categoryId = "izlazakAnne"
         ),
-
+        RecordMock(
+            id = "anneOsobniRec4",
+            title = "Plaća",
+            amount = 670.00,
+            date = LocalDate.now().minusDays(6),
+            isGroupRecord = false,
+            userId = "anneId",
+            accountId = "anneOsobniId",
+            categoryId = "posaoAnne"
+        ),
+        RecordMock(
+            id = "anneOsobniRec5",
+            title = "Izlazak",
+            amount = -40.00,
+            date = LocalDate.now().minusDays(8),
+            isGroupRecord = false,
+            userId = "anneId",
+            accountId = "anneOsobniId",
+            categoryId = "izlazakAnne"
+        ),
+        RecordMock(
+            id = "anneOsobniRec6",
+            title = "Plaća",
+            amount = 780.00,
+            date = LocalDate.now().minusDays(10),
+            isGroupRecord = false,
+            userId = "anneId",
+            accountId = "anneOsobniId",
+            categoryId = "posaoAnne"
+        ),
+        RecordMock(
+            id = "anneOsobniRec7",
+            title = "Plaća",
+            amount = 300.00,
+            date = LocalDate.now().minusDays(12),
+            isGroupRecord = false,
+            userId = "anneId",
+            accountId = "anneOsobniId",
+            categoryId = "posaoAnne"
+        ),
+        RecordMock(
+            id = "anneOsobniRec8",
+            title = "Stipendija",
+            amount = 10.00,
+            date = LocalDate.now().minusDays(14),
+            isGroupRecord = false,
+            userId = "anneId",
+            accountId = "anneOsobniId",
+            categoryId = "stipendijaAnne"
+        ),
+        RecordMock(
+            id = "anneOsobniRec9",
+            title = "Izlazak",
+            amount = -2000.00,
+            date = LocalDate.now().minusDays(16),
+            isGroupRecord = false,
+            userId = "anneId",
+            accountId = "anneOsobniId",
+            categoryId = "izlazakAnne"
+        ),
+        RecordMock(
+            id = "anneOsobniRec10",
+            title = "Stipendija",
+            amount = 20.00,
+            date = LocalDate.now().minusDays(18),
+            isGroupRecord = false,
+            userId = "anneId",
+            accountId = "anneOsobniId",
+            categoryId = "stipendijaAnne"
+        ),
         //////
 
         RecordMock(
@@ -115,6 +184,26 @@ object MockRecordsDatabase {
             accountId = "annePeterObiteljskiId",
             categoryId = "posaoPeter"
         ),
+        RecordMock(
+            id = "anneObiteljskiRec2",
+            title = "Trosak",
+            amount = -200.00,
+            date = LocalDate.now(),
+            isGroupRecord = false,
+            userId = "anneId",
+            accountId = "annePeterObiteljskiId",
+            categoryId = "posaoAnne"
+        ),
+        RecordMock(
+            id = "peterObiteljskiRec2",
+            title = "Trosak",
+            amount = -400.00,
+            date = LocalDate.now(),
+            isGroupRecord = false,
+            userId = "peterId",
+            accountId = "annePeterObiteljskiId",
+            categoryId = "posaoPeter"
+        ),
 
         ////////////////////
         RecordMock(
@@ -142,19 +231,15 @@ object MockRecordsDatabase {
     fun getRecordById(recordId: String): RecordMock {
         return recordsList.first { it.id == recordId }
     }
-
     fun getRecordsByAccountId(accId: String): List<RecordMock> {
         return recordsList.filter { it.accountId == accId }
     }
-
     fun getRecordsByUserId(userId: String): List<RecordMock> {
         return recordsList.filter { it.userId == userId }
     }
-
     fun addRecord(record: RecordMock) {
         recordsList.add(record)
     }
-
     fun deleteRecord(recordId: String) {
         recordsList.removeIf {it.id == recordId}
     }

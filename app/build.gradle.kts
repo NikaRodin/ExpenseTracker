@@ -73,5 +73,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material)
-
+    implementation("com.github.ehsannarmani:ComposeCharts:0.0.4")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

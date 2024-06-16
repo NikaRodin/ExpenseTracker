@@ -25,6 +25,13 @@ object PostLoginDestinations {
             get() = "record-details-screen"
     }
 
+    val AnalysisScreen = object : NavigationCommand {
+        override val arguments: List<NamedNavArgument>
+            get() = emptyList()
+        override val destination: String
+            get() = "analysis-screen"
+    }
+
     val SavingsScreen = object : NavigationCommand {
         override val arguments: List<NamedNavArgument>
             get() = emptyList()
