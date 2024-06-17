@@ -6,7 +6,7 @@ import com.rma.expensetracker.R
 data class Category(
     val id: String,
     val title: String,
-    val color: Color = Color.Blue, //TODO
+        val color: Color = Color.Red,
     val userId: String
 ) {
     companion object {

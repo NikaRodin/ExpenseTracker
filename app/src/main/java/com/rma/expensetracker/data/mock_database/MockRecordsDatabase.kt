@@ -11,8 +11,7 @@ object MockRecordsDatabase {
             amount = 500.00,
             date = LocalDate.now(),
             isGroupRecord = false,
-            notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
-                    "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            notes = "Stipendija za 6. mjesec.",
             userId = "anneId",
             accountId = "anneOsobniId",
             categoryId = "stipendijaAnne"
@@ -29,48 +28,49 @@ object MockRecordsDatabase {
         ),
         RecordMock(
             id = "anneOsobniRec3",
-            title = "Izlazak",
+            title = "Auto",
             amount = -500.00,
             date = LocalDate.now().minusDays(4),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "anneOsobniId",
-            categoryId = "izlazakAnne"
+            categoryId = "autoAnne"
         ),
         RecordMock(
             id = "anneOsobniRec4",
             title = "Plaća",
-            amount = 670.00,
+            amount = 1000.00,
             date = LocalDate.now().minusDays(6),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "anneOsobniId",
             categoryId = "posaoAnne"
         ),
+
         RecordMock(
             id = "anneOsobniRec5",
-            title = "Izlazak",
-            amount = -40.00,
+            title = "Putovanje u Grčku",
+            amount = -400.00,
             date = LocalDate.now().minusDays(8),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "anneOsobniId",
-            categoryId = "izlazakAnne"
+            categoryId = "odmorAnne"
         ),
         RecordMock(
             id = "anneOsobniRec6",
-            title = "Plaća",
+            title = "Stipendija",
             amount = 780.00,
             date = LocalDate.now().minusDays(10),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "anneOsobniId",
-            categoryId = "posaoAnne"
+            categoryId = "stipendijaAnne"
         ),
         RecordMock(
             id = "anneOsobniRec7",
-            title = "Plaća",
-            amount = 300.00,
+            title = "Povišica",
+            amount = 600.00,
             date = LocalDate.now().minusDays(12),
             isGroupRecord = false,
             userId = "anneId",
@@ -79,33 +79,33 @@ object MockRecordsDatabase {
         ),
         RecordMock(
             id = "anneOsobniRec8",
-            title = "Stipendija",
-            amount = 10.00,
+            title = "Nova stolica",
+            amount = -100.00,
             date = LocalDate.now().minusDays(14),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "anneOsobniId",
-            categoryId = "stipendijaAnne"
+            categoryId = "domAnne"
         ),
         RecordMock(
             id = "anneOsobniRec9",
-            title = "Izlazak",
+            title = "Ručak za dvoje",
             amount = -2000.00,
             date = LocalDate.now().minusDays(16),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "anneOsobniId",
-            categoryId = "izlazakAnne"
+            categoryId = "hranaAnne"
         ),
         RecordMock(
             id = "anneOsobniRec10",
-            title = "Stipendija",
-            amount = 20.00,
+            title = "Novi ormar",
+            amount = -200.00,
             date = LocalDate.now().minusDays(18),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "anneOsobniId",
-            categoryId = "stipendijaAnne"
+            categoryId = "domAnne"
         ),
         //////
 
@@ -113,7 +113,7 @@ object MockRecordsDatabase {
             id = "peterOsobniRec1",
             title = "Plaća",
             amount = 1000.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(2),
             isGroupRecord = false,
             userId = "peterId",
             accountId = "peterOsobniId",
@@ -123,7 +123,7 @@ object MockRecordsDatabase {
             id = "peterOsobniRec2",
             title = "Zabava",
             amount = -200.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(4),
             isGroupRecord = false,
             userId = "peterId",
             accountId = "peterOsobniId",
@@ -131,13 +131,13 @@ object MockRecordsDatabase {
         ),
         RecordMock(
             id = "peterOsobniRec3",
-            title = "Restoran",
+            title = "Putovanje u Švedsku",
             amount = -300.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(6),
             isGroupRecord = false,
             userId = "peterId",
             accountId = "peterOsobniId",
-            categoryId = "restoranPeter"
+            categoryId = "putovanjePeter"
         ),
 
         ///////
@@ -156,7 +156,7 @@ object MockRecordsDatabase {
             id = "robertOsobniRec2",
             title = "Kauč",
             amount = -200.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(2),
             isGroupRecord = false,
             userId = "robertId",
             accountId = "robertOsobniId",
@@ -178,7 +178,7 @@ object MockRecordsDatabase {
             id = "peterObiteljskiRec1",
             title = "Plaća",
             amount = 1000.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(2),
             isGroupRecord = false,
             userId = "peterId",
             accountId = "annePeterObiteljskiId",
@@ -186,45 +186,65 @@ object MockRecordsDatabase {
         ),
         RecordMock(
             id = "anneObiteljskiRec2",
-            title = "Trosak",
+            title = "Obiteljsko putovanje",
             amount = -200.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(4),
             isGroupRecord = false,
             userId = "anneId",
             accountId = "annePeterObiteljskiId",
-            categoryId = "posaoAnne"
+            categoryId = "odmorAnne"
         ),
         RecordMock(
             id = "peterObiteljskiRec2",
-            title = "Trosak",
+            title = "Odlazak u kino",
             amount = -400.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(6),
             isGroupRecord = false,
             userId = "peterId",
             accountId = "annePeterObiteljskiId",
-            categoryId = "posaoPeter"
+            categoryId = "zabavaPeter"
         ),
 
         ////////////////////
         RecordMock(
+            id = "annePoslovniRec1",
+            title = "Nabavka sredstava",
+            amount = -400.00,
+            date = LocalDate.now(),
+            isGroupRecord = false,
+            userId = "anneId",
+            accountId = "annePeterRobertPoslovniId",
+            categoryId = "posaoPeter"
+        ),
+        RecordMock(
             id = "peterPoslovniRec1",
             title = "Investicija",
             amount = 10000.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(2),
             isGroupRecord = false,
             userId = "peterId",
-            accountId = "peterRobertPoslovniId",
+            accountId = "annePeterRobertPoslovniId",
             categoryId = "posaoPeter"
         ),
         RecordMock(
             id = "robertPoslovniRec1",
             title = "Investicija",
             amount = 3000.00,
-            date = LocalDate.now(),
+            date = LocalDate.now().minusDays(4),
             isGroupRecord = false,
             userId = "robertId",
-            accountId = "peterRobertPoslovniId",
+            accountId = "annePeterRobertPoslovniId",
             categoryId = "posaoRobert"
+        ),
+        RecordMock(
+            id = "peterPoslovniRec2",
+            title = "Poslovni put",
+            amount = -750.00,
+            date = LocalDate.now().minusDays(6),
+            isGroupRecord = false,
+            userId = "peterId",
+            accountId = "annePeterRobertPoslovniId",
+            categoryId = "putovanjePeter"
         ),
     )
 

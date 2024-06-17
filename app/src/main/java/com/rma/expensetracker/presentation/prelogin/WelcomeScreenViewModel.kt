@@ -1,15 +1,12 @@
 package com.rma.expensetracker.presentation.prelogin
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.rma.expensetracker.common.CurrentUser
-import com.rma.expensetracker.data.interactors.AuthenticationInteractor
-import com.rma.expensetracker.data.interactors.UserInteractor
+import com.rma.expensetracker.common.ToastState
+import com.rma.expensetracker.data.interactors.AuthenticationInteractor.userLogin
 import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class WelcomeScreenViewModel : ViewModel(){
 
@@ -33,13 +30,13 @@ class WelcomeScreenViewModel : ViewModel(){
     )
     private val _emailState = MutableStateFlow(
         InputFieldState(
-            text = "",
+            text = "anne.anderson@mail.com",
             onTextChange = this::onEmailTextChange
         )
     )
     private val _passwordState = MutableStateFlow(
         InputFieldState(
-            text = "",
+            text = "12345",
             onTextChange = this::onPasswordTextChange
         )
     )
@@ -66,17 +63,17 @@ class WelcomeScreenViewModel : ViewModel(){
 
     fun login() {
         //showLoading()
-
-        //ZA TESTING
         /*viewModelScope.launch {
             AuthenticationInteractor.dispatchLoginRequest(
                 emailState.value.text,
                 passwordState.value.text
             )
         }*/
-        CurrentUser.updateCurrentUser(UserInteractor.getUserById("anneId"))
+        val success = userLogin(emailState.value.text, passwordState.value.text)
+        if(!success) ToastState.triggerToast("Prijava neuspješna")
     }
     fun registerUser() {
+        /*
         if(passwordState.value.text == repeatPasswordState.value.text)
             viewModelScope.launch {
                 AuthenticationInteractor.dispatchRegistrationRequest(
@@ -87,6 +84,7 @@ class WelcomeScreenViewModel : ViewModel(){
                     userName = usernameState.value.text
                 )
             }
-        else {/*TODO*/}
+        else {}
+        */
     }
 }

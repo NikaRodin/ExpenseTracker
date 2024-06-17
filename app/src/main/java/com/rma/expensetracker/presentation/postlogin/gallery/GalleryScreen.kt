@@ -5,5 +5,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun GalleryScreen() {
-    Text("Gallery")
+    Text("Gallery - coming soon!")
 }

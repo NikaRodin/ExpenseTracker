@@ -45,7 +45,7 @@ fun AddNewRecordScreen(
                 .fillMaxSize()
                 .padding(paddingValues = innerPadding)
         ) {
-            //Bože sačuvaj haha
+           
             EditRecordInfoContent(
                 titleState,
                 amountState,

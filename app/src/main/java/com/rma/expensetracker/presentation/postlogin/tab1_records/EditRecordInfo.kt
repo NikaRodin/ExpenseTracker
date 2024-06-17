@@ -57,7 +57,6 @@ fun EditRecordInfo(
         viewModel.resetEditScreen()
     }
 
-    //hahahahahahahhaha strašno
     EditRecordInfoContent(
         titleState,
         amountState,

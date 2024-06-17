@@ -14,6 +14,6 @@ fun BudgetScreen(){
         BottomNavBarIndicator.showBottomNavBar()
     }
     Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "Budget")
+        Text(text = "Budgets - coming soon!")
     }
 }

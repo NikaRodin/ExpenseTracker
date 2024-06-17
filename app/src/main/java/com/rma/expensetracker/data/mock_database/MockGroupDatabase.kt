@@ -29,11 +29,15 @@ object MockGroupDatabase {
         ),
         UserAccConnection(
             userId = "peterId",
-            accountId = "peterRobertPoslovniId"
+            accountId = "annePeterRobertPoslovniId"
         ),
         UserAccConnection(
             userId = "robertId",
-            accountId = "peterRobertPoslovniId"
+            accountId = "annePeterRobertPoslovniId"
+        ),
+        UserAccConnection(
+            userId = "anneId",
+            accountId = "annePeterRobertPoslovniId"
         )
     )
 

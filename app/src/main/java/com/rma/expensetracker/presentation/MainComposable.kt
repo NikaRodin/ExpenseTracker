@@ -139,4 +139,3 @@ fun navigateToItemDestination(item: BottomNavItem, navController: NavHostControl
         launchSingleTop = true
     }
 }
-//TODO ipak prebaci u viewModel kasnije i izdvoji BottomNavigation kao komponentu

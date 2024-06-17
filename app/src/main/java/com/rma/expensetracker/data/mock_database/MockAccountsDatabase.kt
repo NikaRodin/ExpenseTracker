@@ -7,7 +7,7 @@ object MockAccountsDatabase {
         Account(
             id = "anneOsobniId",
             title  = "Osobni račun",
-            balance = 1000.00,
+            balance = 680.00,
             isGroupAccount = false
         ),
         Account(
@@ -25,13 +25,13 @@ object MockAccountsDatabase {
         Account(
             id = "annePeterObiteljskiId",
             title  = "Obiteljski račun",
-            balance = 2000.00,
+            balance = 1400.00,
             isGroupAccount = true
         ),
         Account(
-            id = "peterRobertPoslovniId",
+            id = "annePeterRobertPoslovniId",
             title  = "Poslovni račun",
-            balance = 13000.00,
+            balance = 11850.00,
             isGroupAccount = true
         ),
     )

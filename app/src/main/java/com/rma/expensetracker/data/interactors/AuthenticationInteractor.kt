@@ -10,6 +10,14 @@ import com.rma.expensetracker.data.models.raw.RegistrationCredentials
 import com.rma.expensetracker.data.models.raw.RegistrationRequest
 
 object AuthenticationInteractor {
+
+    fun userLogin(email: String, password: String): Boolean {
+        val allUsers = UserInteractor.getAllUsers()
+        val user = allUsers.find { user -> user.email == email }
+        CurrentUser.updateCurrentUser(user)
+        return user != null
+    }
+
     suspend fun dispatchLoginRequest(email: String, password: String) {
         val apiService: ExpenseTrackerApi = RetrofitClient.instance.create(ExpenseTrackerApi::class.java)
 

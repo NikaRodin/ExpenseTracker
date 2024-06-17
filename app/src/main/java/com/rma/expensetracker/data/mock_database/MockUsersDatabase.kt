@@ -8,7 +8,7 @@ object MockUsersDatabase {
             id = "anneId",
             firstName = "Anne",
             lastName = "Anderson",
-            email = "anne.andreson@mail.com",
+            email = "anne.anderson@mail.com",
             userName = "aanderson"
         ),
         User(

@@ -15,6 +15,6 @@ fun SavingsScreen(){
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "Savings")
+        Text(text = "Savings - coming soon!")
     }
 }

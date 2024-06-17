@@ -14,12 +14,12 @@ object MockCategoryDatabase {
         Category(
             id = "posaoAnne",
             title = "posao",
-            color = Color.Yellow,
+            color = Color(230,190, 40),
             userId = "anneId"
         ),
         Category(
-            id = "izlazakAnne",
-            title = "izlazak",
+            id = "autoAnne",
+            title = "auto",
             color = Color.Green,
             userId = "anneId"
         ),
@@ -42,8 +42,8 @@ object MockCategoryDatabase {
             userId = "anneId"
         ),
         Category(
-            id = "zabavaAnne",
-            title = "zabava",
+            id = "hranaAnne",
+            title = "hrana",
             color = Color(255,146, 30),
             userId = "anneId"
         ),
@@ -53,19 +53,19 @@ object MockCategoryDatabase {
         Category(
             id = "posaoPeter",
             title = "posao",
-            color = Color.Green,
+            color = Color.Cyan,
             userId = "peterId"
         ),
         Category(
-            id = "restoranPeter",
-            title = "restoran",
-            color = Color.Yellow,
+            id = "putovanjePeter",
+            title = "putovanje",
+            color = Color.Magenta,
             userId = "peterId"
         ),
         Category(
             id = "zabavaPeter",
             title = "zabava",
-            color = Color.Blue,
+            color = Color(255,146, 30),
             userId = "peterId"
         ),
 
