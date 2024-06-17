@@ -33,13 +33,13 @@ class WelcomeScreenViewModel : ViewModel(){
     )
     private val _emailState = MutableStateFlow(
         InputFieldState(
-            text = "test.mail@mail.com",
+            text = "ivan.horvat@mail.com",
             onTextChange = this::onEmailTextChange
         )
     )
     private val _passwordState = MutableStateFlow(
         InputFieldState(
-            text = "123",
+            text = "1234",
             onTextChange = this::onPasswordTextChange
         )
     )
