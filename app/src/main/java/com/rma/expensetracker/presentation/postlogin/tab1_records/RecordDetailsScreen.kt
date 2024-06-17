@@ -53,7 +53,7 @@ fun RecordDetailsScreen(
             if(currentRecord == null)
                 Text(text = stringResource(R.string.record_not_selected))
             else if (isEditModeOn)
-                EditRecordInfo(viewModel)
+                EditRecordInfo(viewModel, false)
             else
                 PreviewRecordInfo(
                     currentRecord!!,

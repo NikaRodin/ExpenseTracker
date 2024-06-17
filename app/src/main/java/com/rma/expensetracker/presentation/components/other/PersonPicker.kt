@@ -36,7 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.rma.expensetracker.R
-import com.rma.expensetracker.data.models.mock.User
+import com.rma.expensetracker.data.models.useful.User
 import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
 
 @OptIn(ExperimentalLayoutApi::class)

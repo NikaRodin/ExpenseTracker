@@ -1,20 +1,23 @@
 package com.rma.expensetracker.presentation.postlogin.tab3_groups
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.rma.expensetracker.common.BottomNavBarIndicator
 import com.rma.expensetracker.common.CurrentUser
+import com.rma.expensetracker.common.LoadingState
 import com.rma.expensetracker.common.SelectedGroupAccount
 import com.rma.expensetracker.common.ToastState
 import com.rma.expensetracker.data.interactors.AccountInteractor
 import com.rma.expensetracker.data.interactors.UserInteractor
-import com.rma.expensetracker.data.models.mock.Account
-import com.rma.expensetracker.data.models.mock.User
+import com.rma.expensetracker.data.models.useful.Account
+import com.rma.expensetracker.data.models.useful.User
 import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
 import com.rma.expensetracker.presentation.navigation.directions.PostLoginDestinations
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class GroupDetailsViewModel : ViewModel() {
     private val _currentUser: StateFlow<User?> = CurrentUser.currentUser
@@ -67,29 +70,36 @@ class GroupDetailsViewModel : ViewModel() {
     val searchQueryState: StateFlow<InputFieldState> = _searchQueryState
 
     init {
-        //showLoading()
         BottomNavBarIndicator.hideBottomNavBar()
         resetPreviewScreen()
         resetEditScreen()
     }
 
     private fun resetPreviewScreen() {
-        _currentGroupAccount.value = groupAccountId.value?.let {
-            AccountInteractor.getAccountById(it)
+        LoadingState.showLoading()
+        viewModelScope.launch {
+            _currentGroupAccount.value = groupAccountId.value?.let {
+                AccountInteractor.getAccountById(it)
+            }
+            val groupUsers = groupAccountId.value?.let {
+                UserInteractor.getUsersByAccountId(it)
+            }
+            _groupUsersList.value = groupUsers?: emptyList()
+            LoadingState.stopLoading()
         }
-        val groupUsers = groupAccountId.value?.let {
-            UserInteractor.getUsersByAccountId(it)
-        }
-        _groupUsersList.value = groupUsers?: emptyList()
     }
 
     fun resetEditScreen() {
-        _currentGroupAccount.value?.let {
-            onTitleTextChange(it.title)
+        LoadingState.showLoading()
+        viewModelScope.launch {
+            _currentGroupAccount.value?.let {
+                onTitleTextChange(it.title)
+            }
+            _usersOnEditScreen.value = _groupUsersList.value
+            _selectedUsersList.value = emptyList()
+            _allUsersList.value = UserInteractor.getAllUsers()
+            LoadingState.stopLoading()
         }
-        _usersOnEditScreen.value = _groupUsersList.value
-        _selectedUsersList.value = emptyList()
-        _allUsersList.value = UserInteractor.getAllUsers()
     }
 
     private fun onTitleTextChange(newValue: String) {
@@ -105,39 +115,63 @@ class GroupDetailsViewModel : ViewModel() {
     fun onDismissClicked() { _isEditModeOn.value = false }
 
     fun onSaveClicked() {
-        if(_currentGroupAccount.value != null) {
-            if(titleState.value.text.isBlank()) {
-                ToastState.triggerToast("Naziv ne smije biti prazan!")
-                return
+        LoadingState.showLoading()
+        viewModelScope.launch {
+            if(_currentGroupAccount.value != null) {
+                if(titleState.value.text.isBlank()) {
+                    ToastState.triggerToast("Naziv ne smije biti prazan!")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
+
+                val successUpdate = AccountInteractor.updateAccount(
+                    accId = _currentGroupAccount.value!!.id,
+                    newAccount = _currentGroupAccount.value!!.copy(title = titleState.value.text)
+                )
+
+                if(!successUpdate) {
+                    ToastState.triggerToast("Pogreška prilikom ažuriranja računa.")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
+
+                val usersToBeRemoved: MutableList<User> = mutableListOf()
+                usersToBeRemoved.addAll(_groupUsersList.value)
+                usersToBeRemoved.removeAll(_usersOnEditScreen.value)
+
+                val successRemove = AccountInteractor.removeUsersFromAccount(
+                    usersToBeRemoved.map { user -> user.id },
+                    _currentGroupAccount.value!!.id
+                )
+
+                if(!successRemove) {
+                    ToastState.triggerToast("Pogreška prilikom uklanjanja korisnika.")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
+
+                val usersToBeAdded: MutableList<User> = mutableListOf()
+                usersToBeAdded.addAll(_usersOnEditScreen.value)
+                usersToBeAdded.removeAll(_groupUsersList.value)
+
+                val successAdd = AccountInteractor.addUsersToAccount(
+                    usersToBeAdded.map { user -> user.id },
+                    _currentGroupAccount.value!!.id
+                )
+
+                if(!successAdd) {
+                    ToastState.triggerToast("Pogreška prilikom dodavanja korisnika.")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
+
+                resetPreviewScreen()
+                onDismissClicked()
+                LoadingState.stopLoading()
+            } else {
+                ToastState.triggerToast("Greška")
+                LoadingState.stopLoading()
             }
-
-            AccountInteractor.updateAccount(
-                accId = _currentGroupAccount.value!!.id,
-                newAccount = _currentGroupAccount.value!!.copy(title = titleState.value.text)
-            )
-
-            val usersToBeRemoved: MutableList<User> = mutableListOf()
-            usersToBeRemoved.addAll(_groupUsersList.value)
-            usersToBeRemoved.removeAll(_usersOnEditScreen.value)
-
-            AccountInteractor.removeUsersFromAccount(
-                usersToBeRemoved.map { user -> user.id },
-                _currentGroupAccount.value!!.id
-            )
-
-            val usersToBeAdded: MutableList<User> = mutableListOf()
-            usersToBeAdded.addAll(_usersOnEditScreen.value)
-            usersToBeAdded.removeAll(_groupUsersList.value)
-
-            AccountInteractor.addUsersToAccount(
-                usersToBeAdded.map { user -> user.id },
-                _currentGroupAccount.value!!.id
-            )
-
-            resetPreviewScreen()
-            onDismissClicked()
-        } else {
-            ToastState.triggerToast("Greška")
         }
     }
 
@@ -150,20 +184,30 @@ class GroupDetailsViewModel : ViewModel() {
     }
 
     fun onLeaveGroupConfirmed(navController: NavController) {
-        onLeaveGroupDismissed()
+        LoadingState.showLoading()
+        viewModelScope.launch {
+            if(groupAccountId.value != null && _currentUser.value != null){
+                val successRemove = AccountInteractor.removeUsersFromAccount(
+                    listOf(_currentUser.value!!.id),
+                    groupAccountId.value!!
+                )
 
-        if(groupAccountId.value != null && _currentUser.value != null){
-            AccountInteractor.removeUsersFromAccount(
-                listOf(_currentUser.value!!.id),
-                groupAccountId.value!!
-            )
-            ToastState.triggerToast("Napustili ste grupu.")
-            navController.navigate(PostLoginDestinations.GroupsScreen.destination) {
-                popUpTo(0)
-                launchSingleTop = true
+                if(!successRemove) {
+                    ToastState.triggerToast("Napuštanje grupe nije uspjelo.")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
+
+                ToastState.triggerToast("Napustili ste grupu.")
+                navController.navigate(PostLoginDestinations.GroupsScreen.destination) {
+                    popUpTo(0)
+                    launchSingleTop = true
+                }
+            } else {
+                ToastState.triggerToast("Greška")
             }
-        } else {
-            ToastState.triggerToast("Greška")
+            onLeaveGroupDismissed()
+            LoadingState.stopLoading()
         }
     }
 

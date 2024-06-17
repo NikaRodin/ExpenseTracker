@@ -1,6 +1,6 @@
 package com.rma.expensetracker.data.mock_database
 
-import com.rma.expensetracker.data.models.mock.RecordMock
+import com.rma.expensetracker.data.models.useful.RecordMock
 import java.time.LocalDate
 
 object MockRecordsDatabase {

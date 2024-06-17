@@ -23,7 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.rma.expensetracker.data.models.mock.Account
+import com.rma.expensetracker.data.models.useful.Account
 import com.rma.expensetracker.data.models.useful.Record
 import com.rma.expensetracker.presentation.components.graphs.LineGraph
 

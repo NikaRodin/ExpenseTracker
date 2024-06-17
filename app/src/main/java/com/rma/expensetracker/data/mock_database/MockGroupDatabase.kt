@@ -1,7 +1,7 @@
 package com.rma.expensetracker.data.mock_database
 
-import com.rma.expensetracker.data.models.mock.Account
-import com.rma.expensetracker.data.models.mock.User
+import com.rma.expensetracker.data.models.useful.Account
+import com.rma.expensetracker.data.models.useful.User
 
 object MockGroupDatabase {
     private var userAccConnections: MutableList<UserAccConnection> = mutableListOf(

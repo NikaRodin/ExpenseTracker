@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.rma.expensetracker.R
-import com.rma.expensetracker.data.models.mock.User
+import com.rma.expensetracker.data.models.useful.User
 import com.rma.expensetracker.presentation.components.buttons.DismissButton
 import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
 import com.rma.expensetracker.presentation.components.other.PersonPicker

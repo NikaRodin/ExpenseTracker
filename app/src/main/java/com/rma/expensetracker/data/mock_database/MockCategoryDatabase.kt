@@ -1,7 +1,7 @@
 package com.rma.expensetracker.data.mock_database
 
 import androidx.compose.ui.graphics.Color
-import com.rma.expensetracker.data.models.mock.Category
+import com.rma.expensetracker.data.models.useful.Category
 
 object MockCategoryDatabase {
     private var categoriesList: MutableList<Category> = mutableListOf(

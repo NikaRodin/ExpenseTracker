@@ -17,7 +17,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.rma.expensetracker.R
-import com.rma.expensetracker.data.models.mock.User
+import com.rma.expensetracker.data.models.useful.User
 import com.rma.expensetracker.data.models.useful.Record
 import kotlin.math.absoluteValue
 

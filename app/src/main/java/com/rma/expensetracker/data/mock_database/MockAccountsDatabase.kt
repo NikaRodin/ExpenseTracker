@@ -1,6 +1,6 @@
 package com.rma.expensetracker.data.mock_database
 
-import com.rma.expensetracker.data.models.mock.Account
+import com.rma.expensetracker.data.models.useful.Account
 
 object MockAccountsDatabase {
     private var accountsList: MutableList<Account> = mutableListOf(

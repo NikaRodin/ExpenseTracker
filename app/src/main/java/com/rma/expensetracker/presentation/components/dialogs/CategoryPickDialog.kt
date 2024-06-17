@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.rma.expensetracker.R
-import com.rma.expensetracker.data.models.mock.Category
+import com.rma.expensetracker.data.models.useful.Category
 import com.rma.expensetracker.presentation.components.buttons.DismissButton
 import com.rma.expensetracker.presentation.components.other.CategoryTag
 

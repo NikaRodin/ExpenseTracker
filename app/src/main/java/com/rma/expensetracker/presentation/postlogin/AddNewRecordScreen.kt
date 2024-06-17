@@ -45,7 +45,7 @@ fun AddNewRecordScreen(
                 .fillMaxSize()
                 .padding(paddingValues = innerPadding)
         ) {
-            //Bože sačuvaj haha
+
             EditRecordInfoContent(
                 titleState,
                 amountState,
@@ -60,6 +60,7 @@ fun AddNewRecordScreen(
                 category,
                 selectedCategoryId,
                 isCategoryPickerOpen,
+                true,
                 viewModel::onCategorySelected,
                 viewModel::closeCategoryPicker,
                 viewModel::onCategorySaved,

@@ -1,18 +1,15 @@
 package com.rma.expensetracker.data.interactors
 
+import com.rma.expensetracker.common.Constants.apiService
 import com.rma.expensetracker.common.CurrentUser
-import com.rma.expensetracker.data.interactors.network.ExpenseTrackerApi
-import com.rma.expensetracker.data.interactors.network.RetrofitClient
 import com.rma.expensetracker.data.models.mapUserDtoToUser
-import com.rma.expensetracker.data.models.raw.LoginCredentials
-import com.rma.expensetracker.data.models.raw.LoginRequest
-import com.rma.expensetracker.data.models.raw.RegistrationCredentials
-import com.rma.expensetracker.data.models.raw.RegistrationRequest
+import com.rma.expensetracker.data.models.raw.authentication.LoginCredentials
+import com.rma.expensetracker.data.models.raw.authentication.LoginRequest
+import com.rma.expensetracker.data.models.raw.authentication.RegistrationCredentials
+import com.rma.expensetracker.data.models.raw.authentication.RegistrationRequest
 
 object AuthenticationInteractor {
-    suspend fun dispatchLoginRequest(email: String, password: String) {
-        val apiService: ExpenseTrackerApi = RetrofitClient.instance.create(ExpenseTrackerApi::class.java)
-
+    suspend fun dispatchLoginRequest(email: String, password: String): Boolean {
         val user = LoginCredentials(email = email, password = password)
         val request = LoginRequest(operation = "login", user = user)
 
@@ -24,13 +21,17 @@ object AuthenticationInteractor {
                     CurrentUser.updateCurrentUser(mapUserDtoToUser(responseBody.user[0]))
                 } else {
                     println("Error: ${responseBody?.message ?: "Unknown error"}")
+                    return false
                 }
             } else {
                 println("Error: ${response.code()}")
+                return false
             }
         } catch (e: Exception) {
             println("Failure: ${e.message}")
+            return false
         }
+        return true
     }
 
     suspend fun dispatchRegistrationRequest(
@@ -39,9 +40,7 @@ object AuthenticationInteractor {
         firstName: String,
         lastName: String,
         userName: String
-    ) {
-        val apiService: ExpenseTrackerApi = RetrofitClient.instance.create(ExpenseTrackerApi::class.java)
-
+    ): Boolean {
         val user = RegistrationCredentials(
             email = email,
             password = password,
@@ -59,12 +58,16 @@ object AuthenticationInteractor {
                     dispatchLoginRequest(email = email, password = password)
                 } else {
                     println("Error: ${responseBody?.message ?: "Unknown error"}")
+                    return false
                 }
             } else {
                 println("Error: ${response.code()}")
+                return false
             }
         } catch (e: Exception) {
             println("Failure: ${e.message}")
+            return false
         }
+        return true
     }
 }

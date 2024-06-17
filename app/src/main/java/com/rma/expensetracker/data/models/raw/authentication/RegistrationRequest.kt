@@ -1,4 +1,4 @@
-package com.rma.expensetracker.data.models.raw
+package com.rma.expensetracker.data.models.raw.authentication
 
 import com.google.gson.annotations.SerializedName
 

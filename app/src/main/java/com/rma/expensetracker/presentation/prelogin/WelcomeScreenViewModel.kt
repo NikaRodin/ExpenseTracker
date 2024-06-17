@@ -2,9 +2,9 @@ package com.rma.expensetracker.presentation.prelogin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rma.expensetracker.common.CurrentUser
+import com.rma.expensetracker.common.LoadingState
+import com.rma.expensetracker.common.ToastState
 import com.rma.expensetracker.data.interactors.AuthenticationInteractor
-import com.rma.expensetracker.data.interactors.UserInteractor
 import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,13 +33,13 @@ class WelcomeScreenViewModel : ViewModel(){
     )
     private val _emailState = MutableStateFlow(
         InputFieldState(
-            text = "",
+            text = "test.mail@mail.com",
             onTextChange = this::onEmailTextChange
         )
     )
     private val _passwordState = MutableStateFlow(
         InputFieldState(
-            text = "",
+            text = "123",
             onTextChange = this::onPasswordTextChange
         )
     )
@@ -65,28 +65,34 @@ class WelcomeScreenViewModel : ViewModel(){
     val repeatPasswordState: StateFlow<InputFieldState> = _repeatPasswordState
 
     fun login() {
-        //showLoading()
-
-        //ZA TESTING
-        /*viewModelScope.launch {
-            AuthenticationInteractor.dispatchLoginRequest(
+        LoadingState.showLoading()
+        viewModelScope.launch {
+            val success = AuthenticationInteractor.dispatchLoginRequest(
                 emailState.value.text,
                 passwordState.value.text
             )
-        }*/
-        CurrentUser.updateCurrentUser(UserInteractor.getUserById("anneId"))
+            if(!success) ToastState.triggerToast("Prijava nije uspjela.")
+            LoadingState.stopLoading()
+        }
     }
     fun registerUser() {
+
+        LoadingState.showLoading()
         if(passwordState.value.text == repeatPasswordState.value.text)
             viewModelScope.launch {
-                AuthenticationInteractor.dispatchRegistrationRequest(
+                val success = AuthenticationInteractor.dispatchRegistrationRequest(
                     email = emailState.value.text,
                     password = passwordState.value.text,
                     firstName = firstNameState.value.text,
                     lastName = lastNameState.value.text,
                     userName = usernameState.value.text
                 )
+                if(!success) ToastState.triggerToast("Registracija nije uspjela.")
+                LoadingState.stopLoading()
             }
-        else {/*TODO*/}
+        else {
+            ToastState.triggerToast("Lozinke se ne podudaraju!")
+            LoadingState.stopLoading()
+        }
     }
 }

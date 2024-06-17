@@ -1,6 +1,6 @@
 package com.rma.expensetracker.common
 
-import com.rma.expensetracker.data.models.mock.User
+import com.rma.expensetracker.data.models.useful.User
 import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNavBarItems
 import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNavItem
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -91,5 +91,18 @@ object ToastState {
 
     fun resetToastToNull() {
         _showToast.value = null
+    }
+}
+
+object LoadingState {
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean>  = _isLoading.asStateFlow()
+
+    fun showLoading() {
+        _isLoading.value = true
+    }
+
+    fun stopLoading() {
+        _isLoading.value = false
     }
 }

@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.rma.expensetracker.R
-import com.rma.expensetracker.data.models.mock.Account
+import com.rma.expensetracker.data.models.useful.Account
 import com.rma.expensetracker.data.models.useful.Record
 import com.rma.expensetracker.presentation.components.other.CategoryTag
 import com.rma.expensetracker.presentation.components.dialogs.PopUpDialog

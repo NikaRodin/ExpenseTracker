@@ -1,4 +1,4 @@
-package com.rma.expensetracker.data.models.mock
+package com.rma.expensetracker.data.models.useful
 
 import androidx.compose.ui.graphics.Color
 import com.rma.expensetracker.R
@@ -6,7 +6,7 @@ import com.rma.expensetracker.R
 data class Category(
     val id: String,
     val title: String,
-    val color: Color = Color.Blue, //TODO
+    val color: Color = Color.Red,
     val userId: String
 ) {
     companion object {

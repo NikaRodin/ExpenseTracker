@@ -1,5 +1,6 @@
 package com.rma.expensetracker.presentation.postlogin.tab3_groups
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,8 +30,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.rma.expensetracker.R
-import com.rma.expensetracker.data.models.mock.Account
-import com.rma.expensetracker.data.models.mock.User
+import com.rma.expensetracker.data.models.useful.Account
+import com.rma.expensetracker.data.models.useful.User
 import com.rma.expensetracker.presentation.components.dialogs.PopUpDialog
 import com.rma.expensetracker.presentation.postlogin.tab1_records.DataText
 import com.rma.expensetracker.presentation.postlogin.tab1_records.SimpleDataRow
@@ -53,7 +54,6 @@ fun PreviewGroupInfo(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.8f)
                 .padding(20.dp)
         ) {
             SimpleDataRow {
@@ -103,7 +103,9 @@ fun PreviewGroupInfo(
             modifier = Modifier
                 .weight(0.2f)
                 .fillMaxWidth()
-                .padding(vertical = 4.dp),
+                .padding(vertical = 4.dp)
+                .background(Color.Transparent)
+            ,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {

@@ -1,22 +1,25 @@
 package com.rma.expensetracker.presentation.postlogin
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.rma.expensetracker.common.BottomNavBarIndicator
 import com.rma.expensetracker.common.CurrentUser
+import com.rma.expensetracker.common.LoadingState
 import com.rma.expensetracker.common.ToastState
 import com.rma.expensetracker.data.interactors.AccountInteractor
 import com.rma.expensetracker.data.interactors.CategoryInteractor
 import com.rma.expensetracker.data.interactors.RecordInteractor
-import com.rma.expensetracker.data.models.mock.Account
-import com.rma.expensetracker.data.models.mock.Category
-import com.rma.expensetracker.data.models.mock.RecordMock
-import com.rma.expensetracker.data.models.mock.User
+import com.rma.expensetracker.data.models.useful.Account
+import com.rma.expensetracker.data.models.useful.Category
+import com.rma.expensetracker.data.models.useful.RecordMock
+import com.rma.expensetracker.data.models.useful.User
 import com.rma.expensetracker.presentation.components.input_fields.InputFieldState
 import com.rma.expensetracker.presentation.components.input_fields.NumericalInputFieldState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -93,18 +96,22 @@ class AddNewRecordViewModel : ViewModel() {
     }
 
     private fun resetScreen() {
-        val accounts = _currentUser.value?.let {
-            AccountInteractor.getAccountsByUserId(it.id)
-        }
-        _accountsList.value = accounts?: emptyList()
+        LoadingState.showLoading()
+        viewModelScope.launch {
+            val accounts = _currentUser.value?.let {
+                AccountInteractor.getAccountsByUserId(it.id)
+            }
+            _accountsList.value = accounts?: emptyList()
 
-        val categories = _currentUser.value?.let {
-            CategoryInteractor.getCategoriesByUserId(it.id)
-        }
-        _categoriesList.value = categories?: emptyList()
+            val categories = _currentUser.value?.let {
+                CategoryInteractor.getCategoriesByUserId(it.id)
+            }
+            _categoriesList.value = categories?: emptyList()
 
-        if(_category.value != null){
-            _selectedCategoryId.value = _category.value!!.id
+            if(_category.value != null){
+                _selectedCategoryId.value = _category.value!!.id
+            }
+            LoadingState.stopLoading()
         }
     }
 
@@ -115,49 +122,68 @@ class AddNewRecordViewModel : ViewModel() {
     }
 
     fun onSaveClicked(navController: NavController) {
-        if(_currentUser.value != null) {
-            if(titleState.value.text.isBlank()) {
-                ToastState.triggerToast("Naziv ne smije biti prazan!")
-                return
-            }
-            if(dateState.value.text.isBlank()) {
-                ToastState.triggerToast("Odaberite datum!")
-                return
-            }
-            if(selectedAccount.value == -1) {
-                ToastState.triggerToast("Odaberite račun!")
-                return
-            }
-            if(category.value == null) {
-                ToastState.triggerToast("Odaberite kategoriju!")
-                return
-            }
+        LoadingState.showLoading()
+        viewModelScope.launch {
+            if(_currentUser.value != null) {
+                if(titleState.value.text.isBlank()) {
+                    ToastState.triggerToast("Naziv ne smije biti prazan!")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
+                if(dateState.value.text.isBlank()) {
+                    ToastState.triggerToast("Odaberite datum!")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
+                if(selectedAccount.value == -1) {
+                    ToastState.triggerToast("Odaberite račun!")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
+                if(category.value == null) {
+                    ToastState.triggerToast("Odaberite kategoriju!")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
 
-            var enteredAmount = amountState.value.value
-            if (enteredAmount.isBlank() || !enteredAmount.contains("[0-9]".toRegex())) {
-                enteredAmount = "0.00"
+                var enteredAmount = amountState.value.value
+                if (enteredAmount.isBlank() || !enteredAmount.contains("[0-9]".toRegex())) {
+                    enteredAmount = "0.00"
+                }
+                var newAmount = enteredAmount.toDouble()
+                newAmount = if(isExpense.value && newAmount != 0.00) -newAmount else newAmount
+
+                if(newAmount.equals(0.00)) {
+                    ToastState.triggerToast("Iznos ne smije biti nula!")
+                    LoadingState.stopLoading()
+                    return@launch
+                }
+
+                val newRecord = RecordMock(
+                    id = UUID.randomUUID().toString(),
+                    title = titleState.value.text,
+                    amount = newAmount,
+                    date = stringToLocalDate(dateState.value.text)?: LocalDate.now(),
+                    isGroupRecord = false,
+                    notes = notesState.value.text,
+                    photos = emptyList(),
+                    userId = _currentUser.value!!.id,
+                    accountId = accountsList.value[selectedAccount.value].id,
+                    categoryId = category.value!!.id
+                )
+
+                val success = RecordInteractor.addRecord(newRecord)
+                LoadingState.stopLoading()
+                if(!success) {
+                    ToastState.triggerToast("Dodavanje stavke nije uspjelo.")
+                } else {
+                    ToastState.triggerToast("Stavka dodana.")
+                    onDismissClicked(navController)
+                }
+            } else {
+                ToastState.triggerToast("Greška")
+                LoadingState.stopLoading()
             }
-            var newAmount = enteredAmount.toDouble()
-            newAmount = if(isExpense.value && newAmount != 0.00) -newAmount else newAmount
-
-            val newRecord = RecordMock(
-                id = UUID.randomUUID().toString(),
-                title = titleState.value.text,
-                amount = newAmount,
-                date = stringToLocalDate(dateState.value.text)?: LocalDate.now(),
-                isGroupRecord = false,
-                notes = notesState.value.text,
-                photos = emptyList(),
-                userId = _currentUser.value!!.id,
-                accountId = accountsList.value[selectedAccount.value].id,
-                categoryId = category.value!!.id
-            )
-
-            RecordInteractor.addRecord(newRecord)
-            ToastState.triggerToast("Stavka dodana.")
-            onDismissClicked(navController)
-        } else {
-            ToastState.triggerToast("Greška")
         }
     }
 

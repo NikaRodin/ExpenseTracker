@@ -18,7 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.rma.expensetracker.data.models.mock.Category
+import com.rma.expensetracker.data.models.useful.Category
 
 @Composable
 fun CategoryTag(

@@ -50,6 +50,12 @@ fun MainComposable(
     val bottomNavItems by viewModel.bottomNavItems.collectAsState()
     val selectedBottomNavItem by viewModel.selectedBottomNavItem.collectAsState()
 
+    val isLoading by viewModel.isLoading.collectAsState()
+
+    if(isLoading) {
+        LoadingScreen()
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -139,4 +145,3 @@ fun navigateToItemDestination(item: BottomNavItem, navController: NavHostControl
         launchSingleTop = true
     }
 }
-//TODO ipak prebaci u viewModel kasnije i izdvoji BottomNavigation kao komponentu

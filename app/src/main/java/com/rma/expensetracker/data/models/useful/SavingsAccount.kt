@@ -1,4 +1,4 @@
-package com.rma.expensetracker.data.models.mock
+package com.rma.expensetracker.data.models.useful
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

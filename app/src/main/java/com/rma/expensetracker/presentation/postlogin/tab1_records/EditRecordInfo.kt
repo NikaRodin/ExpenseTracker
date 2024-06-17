@@ -24,8 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.rma.expensetracker.R
-import com.rma.expensetracker.data.models.mock.Account
-import com.rma.expensetracker.data.models.mock.Category
+import com.rma.expensetracker.data.models.useful.Account
+import com.rma.expensetracker.data.models.useful.Category
 import com.rma.expensetracker.presentation.components.buttons.MinimalistAddButton
 import com.rma.expensetracker.presentation.components.dialogs.CategoryPickDialog
 import com.rma.expensetracker.presentation.components.input_fields.DateInputField
@@ -37,7 +37,8 @@ import com.rma.expensetracker.presentation.components.other.DropdownComponent
 
 @Composable
 fun EditRecordInfo(
-    viewModel: RecordDetailsViewModel
+    viewModel: RecordDetailsViewModel,
+    showAccountPicker: Boolean = true
 ) {
     val titleState by viewModel.titleState.collectAsState()
     val amountState by viewModel.amountState.collectAsState()
@@ -57,7 +58,6 @@ fun EditRecordInfo(
         viewModel.resetEditScreen()
     }
 
-    //hahahahahahahhaha strašno
     EditRecordInfoContent(
         titleState,
         amountState,
@@ -72,6 +72,7 @@ fun EditRecordInfo(
         category,
         selectedCategoryId,
         isCategoryPickerOpen,
+        showAccountPicker,
         viewModel::onCategorySelected,
         viewModel::closeCategoryPicker,
         viewModel::onCategorySaved,
@@ -101,6 +102,7 @@ fun EditRecordInfoContent(
     category: Category?,
     selectedCategoryId: String?,
     isCategoryPickerOpen: Boolean,
+    showAccountPicker: Boolean,
     onCategorySelected: (String) -> Unit,
     closeCategoryPicker: () -> Unit,
     onCategorySaved: () -> Unit,
@@ -173,17 +175,19 @@ fun EditRecordInfoContent(
             label = { Text(stringResource(id = R.string.edit_record_date_field_label)) },
         )
 
-        DropdownComponent(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            value = if(selectedAccount != -1) accountsList[selectedAccount].title else "",
-            menuItems = accountsList.map { acc -> acc.title },
-            isMenuExpanded = isAccountMenuExpanded,
-            onArrowClicked = onAccountMenuArrowClicked,
-            onItemSelected = onAccountSelected,
-            label = { Text(stringResource(id = R.string.edit_record_acc_field_label)) },
-        )
+        if(showAccountPicker) {
+            DropdownComponent(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                value = if(selectedAccount != -1) accountsList[selectedAccount].title else "",
+                menuItems = accountsList.map { acc -> acc.title },
+                isMenuExpanded = isAccountMenuExpanded,
+                onArrowClicked = onAccountMenuArrowClicked,
+                onItemSelected = onAccountSelected,
+                label = { Text(stringResource(id = R.string.edit_record_acc_field_label)) },
+            )
+        }
 
         SimpleDataColumn {
             DataText(text = stringResource(R.string.categories) + ":")

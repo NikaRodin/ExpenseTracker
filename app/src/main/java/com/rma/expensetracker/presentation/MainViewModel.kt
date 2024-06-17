@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rma.expensetracker.common.BottomNavBarIndicator
 import com.rma.expensetracker.common.CurrentUser
-import com.rma.expensetracker.data.models.mock.User
+import com.rma.expensetracker.common.LoadingState
+import com.rma.expensetracker.data.models.useful.User
 import com.rma.expensetracker.presentation.navigation.bottom_navigation.BottomNavItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,7 +15,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
+    val isLoading: StateFlow<Boolean> = LoadingState.isLoading
+
     private val _currentUser: StateFlow<User?> = CurrentUser.currentUser
+
     private val _userLoggedIn = MutableStateFlow(
         _currentUser
             .map { user -> user != null }

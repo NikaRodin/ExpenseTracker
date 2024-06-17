@@ -1,8 +1,6 @@
 package com.rma.expensetracker.data.models.useful
 
 import androidx.compose.ui.graphics.ImageBitmap
-import com.rma.expensetracker.data.models.mock.Category
-import com.rma.expensetracker.data.models.mock.User
 import java.time.LocalDate
 
 data class Record(
